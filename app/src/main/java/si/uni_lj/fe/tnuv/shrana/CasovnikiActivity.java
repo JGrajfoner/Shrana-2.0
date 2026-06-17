@@ -1,5 +1,6 @@
 package si.uni_lj.fe.tnuv.shrana;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,46 +82,53 @@ public class CasovnikiActivity extends AppCompatActivity
     }
 
     private void odpriDialogZaNovCasovnik() {
-        View pogled = LayoutInflater.from(this)
-                .inflate(R.layout.dialog_nov_casovnik, null);
-
-        EditText vnosUre = pogled.findViewById(R.id.vnosUre);
-        EditText vnosMinute = pogled.findViewById(R.id.vnosMinute);
-        EditText vnosSekunde = pogled.findViewById(R.id.vnosSekunde);
-        EditText vnosOpis = pogled.findViewById(R.id.vnosOpis);
-
-        new AlertDialog.Builder(this)
-                .setTitle("Nov časovnik")
-                .setView(pogled)
-                .setPositiveButton("Dodaj", (dialog, kateri) -> {
-                    int ure = preberi(vnosUre);
-                    int minute = preberi(vnosMinute);
-                    int sekunde = preberi(vnosSekunde);
-                    String opis = vnosOpis.getText().toString().trim();
-
-                    long milis = (ure * 3600L + minute * 60L + sekunde) * 1000L;
+        // Najprej izbira ure in minut prek urnega izbirnika (24-urni način).
+        // Sekunde se ne vnašajo, a odštevanje kasneje teče sekundo za sekundo.
+        TimePickerDialog izbirnikCasa = new TimePickerDialog(
+                this,
+                (view, ure, minute) -> {
+                    long milis = (ure * 3600L + minute * 60L) * 1000L;
                     if (milis <= 0) {
                         Toast.makeText(this, "Nastavi čas, večji od 0",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
+                    // Ko je čas izbran, vprašamo še za opis.
+                    vprasajZaOpisInDodaj(milis);
+                },
+                0, 0, true // začetni čas 00:00, true = 24-urni način
+        );
+        izbirnikCasa.setTitle("Nastavi trajanje");
+        izbirnikCasa.show();
+    }
 
+    // Kratek dialog z enim poljem za opis časovnika.
+    private void vprasajZaOpisInDodaj(long milis) {
+        final EditText vnosOpis = new EditText(this);
+        vnosOpis.setHint("Opis (npr. Krompir)");
+        vnosOpis.setSingleLine(true);
+
+        // Malce odmika, da polje ni nalepljeno na rob dialoga.
+        int rob = (int) (24 * getResources().getDisplayMetrics().density);
+        android.widget.FrameLayout ovoj = new android.widget.FrameLayout(this);
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.leftMargin = rob;
+        lp.rightMargin = rob;
+        ovoj.addView(vnosOpis, lp);
+
+        new AlertDialog.Builder(this)
+                .setTitle("Opis časovnika")
+                .setView(ovoj)
+                .setPositiveButton("Dodaj", (dialog, kateri) -> {
+                    String opis = vnosOpis.getText().toString().trim();
                     RepozitorijCasovnikov.dodaj(milis, opis);
                     adapter.notifyItemInserted(casovniki.size() - 1);
                     posodobiPraznoStanje();
                 })
                 .setNegativeButton("Prekliči", null)
                 .show();
-    }
-
-    private int preberi(EditText polje) {
-        String t = polje.getText().toString().trim();
-        if (t.isEmpty()) return 0;
-        try {
-            return Integer.parseInt(t);
-        } catch (NumberFormatException e) {
-            return 0;
-        }
     }
 
     private void nastaviNavigacijo() {

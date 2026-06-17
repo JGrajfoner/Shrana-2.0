@@ -58,6 +58,12 @@ public class RepozitorijCasovnikov {
         } else if (c.preostaloMilis > 0) {
             zazeni(c);
         }
+        // Po preklopu osvežimo prikaz takoj, da se ikona spremeni
+        // pavza <-> nadaljuj. (Ob pavzi se timer ustavi in onTick več ne
+        // sproži osvežitve, zato jo moramo sprožiti tukaj.)
+        if (poslusalec != null) {
+            poslusalec.osveziPrikaz();
+        }
     }
 
     // Zažene odštevanje

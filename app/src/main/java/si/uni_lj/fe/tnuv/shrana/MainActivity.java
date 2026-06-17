@@ -107,6 +107,9 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         });
 
+        findViewById(R.id.gumbFilter).setOnClickListener(v -> odpriFilterDialog());
+
+        osveziBarvoFilterGumba();
         nastaviNavigacijo();
     }
 
@@ -167,6 +170,118 @@ public class MainActivity extends AppCompatActivity {
         new ItemTouchHelper(callback).attachToRecyclerView(seznam);
     }
 
+    // ===== Dialog za napredno filtriranje (oznake, čas, kalorije) =====
+    private void odpriFilterDialog() {
+        View pogled = getLayoutInflater().inflate(R.layout.dialog_filter, null);
+
+        com.google.android.material.chip.ChipGroup chipi =
+                pogled.findViewById(R.id.chipGroupFilter);
+        TextView oznakePrazno = pogled.findViewById(R.id.oznakePrazno);
+        com.google.android.material.slider.Slider sliderCas =
+                pogled.findViewById(R.id.sliderCas);
+        com.google.android.material.slider.Slider sliderKalorije =
+                pogled.findViewById(R.id.sliderKalorije);
+        TextView oznakaCas = pogled.findViewById(R.id.oznakaCas);
+        TextView oznakaKalorije = pogled.findViewById(R.id.oznakaKalorije);
+
+        // --- Zberi vse oznake in najvišje vrednosti iz obstoječih receptov ---
+        java.util.TreeSet<String> vseOznake = new java.util.TreeSet<>();
+        int najvecCas = 0;
+        int najvecKalorij = 0;
+        for (Recept r : recepti) {
+            if (r.oznake != null) vseOznake.addAll(r.oznake);
+            najvecCas = Math.max(najvecCas, r.getSkupniCas());
+            najvecKalorij = Math.max(najvecKalorij, r.kalorije);
+        }
+        // Zaokroži navzgor in poskrbi za smiselne minimalne razpone
+        final int casZgornja = Math.max(60, ((najvecCas / 30) + 1) * 30);
+        final int kalorijeZgornja = Math.max(500, ((najvecKalorij / 100) + 1) * 100);
+
+        // --- Oznake kot izbirni chipi ---
+        if (vseOznake.isEmpty()) {
+            oznakePrazno.setVisibility(View.VISIBLE);
+        }
+        java.util.Set<String> ze = adapter.getIzbraneOznake();
+        for (String oznaka : vseOznake) {
+            com.google.android.material.chip.Chip chip =
+                    new com.google.android.material.chip.Chip(this);
+            chip.setText(oznaka);
+            chip.setCheckable(true);
+            chip.setChecked(ze.contains(oznaka));
+            chipi.addView(chip);
+        }
+
+        // --- Slider: čas ---
+        sliderCas.setValueFrom(0);
+        sliderCas.setValueTo(casZgornja);
+        int trenutniMaxCas = adapter.getMaxCas();
+        float zacetniCas = (trenutniMaxCas == Integer.MAX_VALUE)
+                ? casZgornja : Math.min(trenutniMaxCas, casZgornja);
+        sliderCas.setValue(zacetniCas);
+        oznakaCas.setText(formatirajCasFilter((int) zacetniCas, casZgornja));
+        sliderCas.addOnChangeListener((s, value, fromUser) ->
+                oznakaCas.setText(formatirajCasFilter((int) value, casZgornja)));
+
+        // --- Slider: kalorije ---
+        sliderKalorije.setValueFrom(0);
+        sliderKalorije.setValueTo(kalorijeZgornja);
+        int trenutniMaxKal = adapter.getMaxKalorije();
+        float zacetneKal = (trenutniMaxKal == Integer.MAX_VALUE)
+                ? kalorijeZgornja : Math.min(trenutniMaxKal, kalorijeZgornja);
+        sliderKalorije.setValue(zacetneKal);
+        oznakaKalorije.setText(formatirajKalorijeFilter((int) zacetneKal, kalorijeZgornja));
+        sliderKalorije.addOnChangeListener((s, value, fromUser) ->
+                oznakaKalorije.setText(formatirajKalorijeFilter((int) value, kalorijeZgornja)));
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Filtriraj recepte")
+                .setView(pogled)
+                .setPositiveButton("Uporabi", (dialog, kateri) -> {
+                    java.util.Set<String> izbrane = new java.util.HashSet<>();
+                    for (int i = 0; i < chipi.getChildCount(); i++) {
+                        com.google.android.material.chip.Chip c =
+                                (com.google.android.material.chip.Chip) chipi.getChildAt(i);
+                        if (c.isChecked()) izbrane.add(c.getText().toString());
+                    }
+                    // Če je slider na vrhu, pomeni "brez omejitve"
+                    int cas = (int) sliderCas.getValue();
+                    int kal = (int) sliderKalorije.getValue();
+                    int maxCas = (cas >= casZgornja) ? Integer.MAX_VALUE : cas;
+                    int maxKal = (kal >= kalorijeZgornja) ? Integer.MAX_VALUE : kal;
+
+                    adapter.nastaviFiltre(izbrane, maxCas, maxKal);
+                    osveziBarvoFilterGumba();
+                })
+                .setNeutralButton("Počisti", (dialog, kateri) -> {
+                    adapter.nastaviFiltre(null, Integer.MAX_VALUE, Integer.MAX_VALUE);
+                    osveziBarvoFilterGumba();
+                })
+                .setNegativeButton("Prekliči", null)
+                .show();
+    }
+
+    private String formatirajCasFilter(int minute, int zgornja) {
+        if (minute >= zgornja) return "Brez omejitve";
+        int h = minute / 60;
+        int m = minute % 60;
+        if (h > 0) return "do " + h + " h " + m + " min";
+        return "do " + m + " min";
+    }
+
+    private String formatirajKalorijeFilter(int kal, int zgornja) {
+        if (kal >= zgornja) return "Brez omejitve";
+        return "do " + kal + " kcal";
+    }
+
+    private void osveziBarvoFilterGumba() {
+        ImageView gumbFilter = findViewById(R.id.gumbFilter);
+        if (gumbFilter == null) return;
+        int barva = adapter.jeFilterAktiven()
+                ? androidx.core.content.ContextCompat.getColor(this, R.color.primarna)
+                : androidx.core.content.ContextCompat.getColor(this, R.color.besedilo_sekundarno);
+        gumbFilter.setColorFilter(barva);
+    }
+
     static class ReceptAdapter extends RecyclerView.Adapter<ReceptAdapter.ReceptViewHolder> {
 
         interface OnReceptClick {
@@ -181,6 +296,13 @@ public class MainActivity extends AppCompatActivity {
         private final List<Recept> prikazani;
         private final OnReceptClick poslusalec;
 
+        // ===== Stanje filtrov (vsa merila se uveljavijo skupaj) =====
+        private String iskalniNiz = "";
+        private boolean samoPriljubljeni = false;
+        private final java.util.Set<String> izbraneOznake = new java.util.HashSet<>();
+        private int maxCas = Integer.MAX_VALUE;       // skupni čas (priprava + kuhanje)
+        private int maxKalorije = Integer.MAX_VALUE;
+
         ReceptAdapter(List<Recept> recepti, OnReceptClick poslusalec) {
             this.vsiRecepti = recepti;
             this.prikazani = new ArrayList<>(recepti);
@@ -189,15 +311,12 @@ public class MainActivity extends AppCompatActivity {
 
         public void dodaj(Recept recept) {
             vsiRecepti.add(recept);
-            prikazani.add(recept);
-            notifyItemInserted(prikazani.size() - 1);
+            uveljavi();
         }
 
         // Ponovno uskladi prikazani seznam z glavnim in osveži celoten prikaz.
         public void osvezi() {
-            prikazani.clear();
-            prikazani.addAll(vsiRecepti);
-            notifyDataSetChanged();
+            uveljavi();
         }
 
         public void odstrani(int pozicija) {
@@ -209,34 +328,74 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        // ===== Vmesniki za posamezna merila (vsak le nastavi svoj del) =====
         public void filtriraj(String poizvedba) {
-            prikazani.clear();
-            String q = poizvedba.toLowerCase().trim();
+            iskalniNiz = poizvedba == null ? "" : poizvedba.toLowerCase().trim();
+            uveljavi();
+        }
 
-            if (q.isEmpty()) {
-                prikazani.addAll(vsiRecepti);
-            } else {
-                for (Recept r : vsiRecepti) {
-                    if (r.naslov.toLowerCase().contains(q)) {
-                        prikazani.add(r);
-                    }
+        public void prikaziPriljubljene(boolean samo) {
+            this.samoPriljubljeni = samo;
+            uveljavi();
+        }
+
+        public void nastaviFiltre(java.util.Set<String> oznake, int maxCas, int maxKalorije) {
+            izbraneOznake.clear();
+            if (oznake != null) izbraneOznake.addAll(oznake);
+            this.maxCas = maxCas;
+            this.maxKalorije = maxKalorije;
+            uveljavi();
+        }
+
+        // Trenutno aktivno stanje filtrov (za predizpolnitev dialoga)
+        public java.util.Set<String> getIzbraneOznake() { return izbraneOznake; }
+        public int getMaxCas() { return maxCas; }
+        public int getMaxKalorije() { return maxKalorije; }
+
+        // Ali je kak filter sploh aktiven (za npr. obarvanje gumba)
+        public boolean jeFilterAktiven() {
+            return !izbraneOznake.isEmpty()
+                    || maxCas != Integer.MAX_VALUE
+                    || maxKalorije != Integer.MAX_VALUE;
+        }
+
+        // ===== Osrednja filtrirna logika: vsa merila hkrati =====
+        private void uveljavi() {
+            prikazani.clear();
+            for (Recept r : vsiRecepti) {
+                if (ustreza(r)) {
+                    prikazani.add(r);
                 }
             }
             notifyDataSetChanged();
         }
 
-        public void prikaziPriljubljene(boolean samoPriljubljeni) {
-            prikazani.clear();
-            if (samoPriljubljeni) {
-                for (Recept r : vsiRecepti) {
-                    if (r.priljubljen) {
-                        prikazani.add(r);
-                    }
+        private boolean ustreza(Recept r) {
+            // Iskalni niz (po naslovu)
+            if (!iskalniNiz.isEmpty()) {
+                if (r.naslov == null || !r.naslov.toLowerCase().contains(iskalniNiz)) {
+                    return false;
                 }
-            } else {
-                prikazani.addAll(vsiRecepti);
             }
-            notifyDataSetChanged();
+            // Samo priljubljeni
+            if (samoPriljubljeni && !r.priljubljen) {
+                return false;
+            }
+            // Največji skupni čas
+            if (r.getSkupniCas() > maxCas) {
+                return false;
+            }
+            // Največ kalorij
+            if (r.kalorije > maxKalorije) {
+                return false;
+            }
+            // Oznake: recept mora vsebovati VSE izbrane oznake
+            if (!izbraneOznake.isEmpty()) {
+                if (r.oznake == null || !r.oznake.containsAll(izbraneOznake)) {
+                    return false;
+                }
+            }
+            return true;
         }
 
         @NonNull
