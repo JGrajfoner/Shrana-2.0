@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <EditText
+            android:id="@+id/vnosUre"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:hint="uu"
+            android:inputType="number"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/vnosMinute"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:hint="mm"
+            android:inputType="number"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/vnosSekunde"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:hint="ss"
+            android:inputType="number"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/vnosOpis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Opis (npr. Krompir)"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>

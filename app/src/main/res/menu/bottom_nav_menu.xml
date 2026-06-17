@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_koledar"
+        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:title="Koledar" />
+    <item
+        android:id="@+id/nav_seznam"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Seznam" />
+    <item
+        android:id="@+id/nav_recepti"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="Recepti" />
+    <item
+        android:id="@+id/nav_casovnik"
+        android:icon="@android:drawable/ic_menu_recent_history"
+        android:title="Časovnik" />
+    <item
+        android:id="@+id/nav_pomocnik"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="Pomočnik" />
+</menu>

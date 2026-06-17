@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Naslov zaslona -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dodaj nov recept"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Naslov recepta -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NASLOV"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/vnosNaslov"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Naslov recepta"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Čas -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ČAS"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/vnosCas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="npr. 30 min"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Opis -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OPIS"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/vnosOpis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Kratek opis recepta"
+            android:minLines="3"
+            android:gravity="top"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Sestavine -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SESTAVINE"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(vsako sestavino v svojo vrstico)"
+            android:textSize="12sp"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/vnosSestavine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="500g piščančje meso&#10;250ml paradižnikova mezga&#10;..."
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:gravity="top"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Priprava -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PRIPRAVA"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(vsak korak v svojo vrstico)"
+            android:textSize="12sp"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/vnosPriprava"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Meso narežemo na kocke&#10;Segrejemo olje&#10;..."
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:gravity="top"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Gumba PREKLIČI in SHRANI -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/gumbPreklici"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="Prekliči"
+                android:backgroundTint="#E57373"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/gumbShrani"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="Shrani"
+                android:backgroundTint="#FFEB3B"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
