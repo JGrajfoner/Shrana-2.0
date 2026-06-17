@@ -3,6 +3,7 @@ package si.uni_lj.fe.tnuv.shrana;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +29,6 @@ public class PodrobnostiActivity extends AppCompatActivity {
                 if (rezultat.getResultCode() == RESULT_OK && rezultat.getData() != null) {
                     Recept posodobljen = (Recept) rezultat.getData().getSerializableExtra("recept");
                     if (posodobljen != null) {
-                        // Posodobimo originalni objekt v repozitoriju
                         posodobiVRepozitoriju(posodobljen);
                         this.recept = posodobljen;
                         prikaziPodatke();
@@ -80,17 +80,18 @@ public class PodrobnostiActivity extends AppCompatActivity {
     private void prikaziPodatke() {
         if (recept == null) return;
 
-        if (recept.slikaUri != null) {
+        if (recept.slikaUri != null && !recept.slikaUri.isEmpty()) {
             slika.setImageURI(Uri.parse(recept.slikaUri));
         } else {
-            slika.setImageResource(android.R.drawable.ic_menu_gallery);
+            slika.setImageResource(R.drawable.ic_image);
         }
 
         naslov.setText(recept.naslov);
         opis.setText(recept.opis);
-        casPriprave.setText("🥣 Priprava: " + formatirajCas(recept.casPriprave));
-        casKuhanja.setText("🔥 Kuhanje: " + formatirajCas(recept.casKuhanja));
-        kalorije.setText("⚡ " + recept.kalorije + " kcal");
+        // Odstranjeni emojiji, saj so zdaj ikonice v XML-ju
+        casPriprave.setText("Priprava: " + formatirajCas(recept.casPriprave));
+        casKuhanja.setText("Kuhanje: " + formatirajCas(recept.casKuhanja));
+        kalorije.setText(recept.kalorije + " kcal");
         sestavine.setText(seznamSestavinVBesedilo(recept.sestavine));
         priprava.setText(recept.priprava);
 
@@ -107,9 +108,6 @@ public class PodrobnostiActivity extends AppCompatActivity {
     private void posodobiVRepozitoriju(Recept novi) {
         List<Recept> vsi = RepozitorijReceptov.getRecepti();
         for (int i = 0; i < vsi.size(); i++) {
-            // Ker nimamo ID-ja, primerjamo objekte. Serializable vrne kopijo,
-            // zato moramo najti ujemanje (npr. po naslovu in opisu)
-            // Idealno bi bilo imeti ID polje v Recept.java.
             Recept r = vsi.get(i);
             if (r.naslov.equals(recept.naslov) && (r.opis != null && r.opis.equals(recept.opis))) {
                 vsi.set(i, novi);

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -15,23 +14,32 @@
         android:padding="8dp"
         android:gravity="center_vertical">
 
-        <EditText
-            android:id="@+id/iskalnik"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Išči ..."
-            android:drawableStart="@android:drawable/ic_menu_search"
-            android:drawablePadding="8dp"
-            android:padding="10dp"
-            android:background="@android:drawable/editbox_background" />
+            app:hintEnabled="false"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+            app:startIconDrawable="@drawable/ic_search"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/iskalnik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Išči ..."
+                android:inputType="text"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton
             android:id="@+id/gumbFilter"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
-            android:src="@android:drawable/ic_menu_sort_by_size"
+            android:src="@drawable/ic_filter"
             android:background="?attr/selectableItemBackground"
             android:contentDescription="Filter" />
 
@@ -39,7 +47,7 @@
             android:id="@+id/gumbPriljubljeni"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@android:drawable/btn_star_big_off"
+            android:src="@drawable/ic_star_outline"
             android:background="?attr/selectableItemBackground"
             android:contentDescription="Priljubljeni" />
     </LinearLayout>
@@ -56,6 +64,7 @@
             android:layout_height="match_parent"
             android:padding="8dp" />
 
+        <!-- Gumb Dodaj z napisom in ikono, kot na strani za časovnike -->
         <Button
             android:id="@+id/gumbDodaj"
             android:layout_width="wrap_content"
@@ -64,7 +73,8 @@
             android:layout_margin="16dp"
             android:text="+ Dodaj"
             android:backgroundTint="#FFEB3B"
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:textAllCaps="false" />
 
     </FrameLayout>
 

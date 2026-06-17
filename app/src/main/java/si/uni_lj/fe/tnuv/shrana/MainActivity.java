@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -237,23 +238,22 @@ public class MainActivity extends AppCompatActivity {
             int skupniMin = r.getSkupniCas();
             int ure = skupniMin / 60;
             int minute = skupniMin % 60;
-            String casTekst = "🕐 ";
-            if (ure > 0) casTekst += ure + "h ";
-            casTekst += minute + "m";
+            String casTekst = (ure > 0 ? ure + "h " : "") + minute + "m";
             
-            holder.cas.setText(casTekst + "  🔥 " + r.kalorije + " kcal");
+            holder.cas.setText(casTekst);
+            holder.kalorije.setText(r.kalorije + " kcal");
             holder.opis.setText(r.opis);
             holder.itemView.setOnClickListener(v -> poslusalec.naReceptKlik(r));
 
-            if (r.slikaUri != null) {
+            if (r.slikaUri != null && !r.slikaUri.isEmpty()) {
                 holder.slika.setImageURI(Uri.parse(r.slikaUri));
             } else {
-                holder.slika.setImageResource(android.R.drawable.ic_menu_gallery);
+                holder.slika.setImageResource(R.drawable.ic_image);
             }
 
             holder.srcek.setImageResource(r.priljubljen
-                    ? android.R.drawable.btn_star_big_on
-                    : android.R.drawable.btn_star_big_off);
+                    ? R.drawable.ic_star_filled
+                    : R.drawable.ic_star_outline);
 
             holder.srcek.setOnClickListener(v -> {
                 r.priljubljen = !r.priljubljen;
@@ -270,13 +270,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         static class ReceptViewHolder extends RecyclerView.ViewHolder {
-            TextView naslov, cas, opis;
+            TextView naslov, cas, kalorije, opis;
             ImageView slika, srcek;
 
             ReceptViewHolder(@NonNull View itemView) {
                 super(itemView);
                 naslov = itemView.findViewById(R.id.naslovRecepta);
                 cas = itemView.findViewById(R.id.casRecepta);
+                kalorije = itemView.findViewById(R.id.kalorijeRecepta);
                 opis = itemView.findViewById(R.id.opisRecepta);
                 slika = itemView.findViewById(R.id.slikaRecepta);
                 srcek = itemView.findViewById(R.id.srcek);
