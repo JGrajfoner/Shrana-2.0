@@ -25,6 +25,7 @@
         <activity android:name=".KoledarActivity" />
         <activity android:name=".SeznamActivity" />
         <activity android:name=".CasovnikiActivity" />
+        <activity android:name=".UrejanjeReceptaActivity" />
     </application>
 
 </manifest>
