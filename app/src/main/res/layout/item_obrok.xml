@@ -5,7 +5,8 @@
     android:orientation="horizontal"
     android:gravity="center_vertical"
     android:paddingTop="12dp"
-    android:paddingBottom="12dp">
+    android:paddingBottom="12dp"
+    android:fitsSystemWindows="true">
 
     <!-- Ime obroka: Zajtrk / Kosilo / Večerja -->
     <TextView
