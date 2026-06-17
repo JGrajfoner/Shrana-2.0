@@ -2,8 +2,10 @@ package si.uni_lj.fe.tnuv.shrana;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.lang.reflect.Type;
 
@@ -20,7 +22,12 @@ public class JsonShramba {
                 context.getSharedPreferences(imeDatoteke, Context.MODE_PRIVATE);
         String json = prefs.getString(kljuc, null);
         if (json == null) return null;
-        return GSON.fromJson(json, tip);
+        try {
+            return GSON.fromJson(json, tip);
+        } catch (JsonSyntaxException e) {
+            Log.e("JsonShramba", "Napaka pri branju JSON: " + e.getMessage());
+            return null;
+        }
     }
 
     // Zapiše objekt v datoteko pod ključem kot JSON.

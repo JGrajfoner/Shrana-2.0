@@ -1,10 +1,15 @@
 package si.uni_lj.fe.tnuv.shrana;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import java.util.List;
 
@@ -15,32 +20,52 @@ public class PodrobnostiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_podrobnosti);
 
-        // Gumb nazaj zapre ta zaslon in se vrne na seznam receptov
         findViewById(R.id.gumbNazaj).setOnClickListener(v -> finish());
 
-        // Prevzamemo recept, ki nam ga je poslala domača stran
         Recept recept = (Recept) getIntent().getSerializableExtra("recept");
 
+        ImageView slika = findViewById(R.id.slika);
         TextView naslov = findViewById(R.id.naslov);
         TextView opis = findViewById(R.id.opis);
-        TextView cas = findViewById(R.id.cas);
+        TextView casPriprave = findViewById(R.id.casPriprave);
+        TextView casKuhanja = findViewById(R.id.casKuhanja);
+        TextView kalorije = findViewById(R.id.kalorijePrikaz);
         TextView sestavine = findViewById(R.id.sestavine);
         TextView priprava = findViewById(R.id.priprava);
+        ChipGroup chipGroupOznake = findViewById(R.id.chipGroupOznakePrikaz);
 
         if (recept != null) {
+            if (recept.slikaUri != null) {
+                slika.setImageURI(Uri.parse(recept.slikaUri));
+            } else {
+                slika.setImageResource(android.R.drawable.ic_menu_gallery);
+            }
+
             naslov.setText(recept.naslov);
             opis.setText(recept.opis);
-            cas.setText("🕐 " + recept.cas);
-            sestavine.setText(seznamVBesedilo(recept.sestavine));
-            priprava.setText(oštevilčeniKoraki(recept.koraki));
+            
+            casPriprave.setText("🥣 Priprava: " + formatirajCas(recept.casPriprave));
+            casKuhanja.setText("🔥 Kuhanje: " + formatirajCas(recept.casKuhanja));
+            kalorije.setText("⚡ " + recept.kalorije + " kcal");
+            
+            sestavine.setText(seznamSestavinVBesedilo(recept.sestavine));
+            priprava.setText(recept.priprava);
+
+            if (recept.oznake != null) {
+                for (String oznaka : recept.oznake) {
+                    Chip chip = new Chip(this);
+                    chip.setText(oznaka);
+                    chipGroupOznake.addView(chip);
+                }
+            }
         }
 
         findViewById(R.id.gumbNaSeznam).setOnClickListener(v -> {
             if (recept != null && recept.sestavine != null) {
                 RepozitorijSeznama.nalozi(this);
                 List<PostavkaSeznama> seznam = RepozitorijSeznama.getPostavke();
-                for (String sestavina : recept.sestavine) {
-                    seznam.add(new PostavkaSeznama(sestavina));
+                for (Recept.Sestavina s : recept.sestavine) {
+                    seznam.add(new PostavkaSeznama(s.toString()));
                 }
                 RepozitorijSeznama.shrani(this);
                 Toast.makeText(this, "Dodano na nakupovalni seznam",
@@ -49,29 +74,18 @@ public class PodrobnostiActivity extends AppCompatActivity {
         });
     }
 
-    // Klik na puščico nazaj zapre ta zaslon in se vrne na prejšnjega
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
+    private String formatirajCas(int minute) {
+        int h = minute / 60;
+        int m = minute % 60;
+        if (h > 0) return h + " h " + m + " min";
+        return m + " min";
     }
 
-    // Sestavine izpišemo vsako v svojo vrstico z vodilno piko
-    private String seznamVBesedilo(List<String> seznam) {
+    private String seznamSestavinVBesedilo(List<Recept.Sestavina> seznam) {
         if (seznam == null || seznam.isEmpty()) return "-";
         StringBuilder sb = new StringBuilder();
-        for (String vrstica : seznam) {
-            sb.append("• ").append(vrstica).append("\n");
-        }
-        return sb.toString().trim();
-    }
-
-    // Korake priprave oštevilčimo: 1. ... 2. ...
-    private String oštevilčeniKoraki(List<String> seznam) {
-        if (seznam == null || seznam.isEmpty()) return "-";
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < seznam.size(); i++) {
-            sb.append(i + 1).append(". ").append(seznam.get(i)).append("\n");
+        for (Recept.Sestavina s : seznam) {
+            sb.append("• ").append(s.toString()).append("\n");
         }
         return sb.toString().trim();
     }
