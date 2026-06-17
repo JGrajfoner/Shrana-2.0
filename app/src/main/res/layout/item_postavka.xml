@@ -6,9 +6,8 @@
     android:gravity="center_vertical"
     android:paddingTop="12dp"
     android:paddingBottom="12dp"
-    android:paddingStart="8dp"
-    android:paddingEnd="8dp"
-    android:fitsSystemWindows="true">
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp">
 
     <CheckBox
         android:id="@+id/kljukica"
@@ -21,7 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="postavka"
-        android:textSize="18sp"
+        android:textSize="17sp"
+        android:textColor="@color/besedilo_primarno"
         android:layout_marginStart="8dp" />
 
 </LinearLayout>

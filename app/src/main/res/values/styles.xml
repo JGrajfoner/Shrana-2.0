@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ===== NASLOV ZASLONA (Recepti, Koledar, Seznam, Časovniki ...) ===== -->
+    <style name="NaslovZaslona">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/besedilo_primarno</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
+    <!-- ===== NASLOV RAZDELKA (NASLOV, SLIKA, SESTAVINE ...) ===== -->
+    <style name="NaslovRazdelka">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/besedilo_sekundarno</item>
+        <item name="android:letterSpacing">0.06</item>
+        <item name="android:layout_marginBottom">6dp</item>
+    </style>
+
+    <!-- ===== VNOSNO POLJE (enoten okvirjen videz) ===== -->
+    <style name="Polje" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+    </style>
+
+    <!-- ===== PRIMARNI GUMB ===== -->
+    <style name="Gumb.Primarni" parent="Widget.Material3.Button">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="cornerRadius">14dp</item>
+    </style>
+
+    <!-- ===== SEKUNDARNI / TONALNI GUMB ===== -->
+    <style name="Gumb.Tonalni" parent="Widget.Material3.Button.TonalButton">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">15sp</item>
+        <item name="cornerRadius">14dp</item>
+    </style>
+
+    <!-- ===== TEKSTOVNI GUMB ===== -->
+    <style name="Gumb.Tekstovni" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!-- ===== OPOZORILNI GUMB (prekliči / izbriši) ===== -->
+    <style name="Gumb.Opozorilo" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">15sp</item>
+        <item name="cornerRadius">14dp</item>
+        <item name="android:textColor">@color/opozorilo</item>
+        <item name="strokeColor">@color/opozorilo</item>
+    </style>
+
+    <!-- ===== KARTICA ===== -->
+    <style name="Kartica" parent="Widget.Material3.CardView.Filled">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">@color/povrsina</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">@color/locnica</item>
+    </style>
+
+    <!-- ===== LOČNICA ===== -->
+    <style name="Locnica">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/locnica</item>
+    </style>
+
+</resources>

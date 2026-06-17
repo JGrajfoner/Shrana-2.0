@@ -29,8 +29,15 @@ public class PodrobnostiActivity extends AppCompatActivity {
                 if (rezultat.getResultCode() == RESULT_OK && rezultat.getData() != null) {
                     Recept posodobljen = (Recept) rezultat.getData().getSerializableExtra("recept");
                     if (posodobljen != null) {
-                        posodobiVRepozitoriju(posodobljen);
-                        this.recept = posodobljen;
+                        // Posodobimo OBSTOJEČI objekt v repozitoriju na mestu (ohrani referenco,
+                        // ki jo drži tudi seznam v MainActivity), namesto da ga zamenjamo.
+                        Recept vRepo = najdiVRepozitoriju(posodobljen);
+                        if (vRepo != null) {
+                            vRepo.prepisiIz(posodobljen);
+                            this.recept = vRepo;
+                        } else {
+                            this.recept = posodobljen;
+                        }
                         prikaziPodatke();
                         RepozitorijReceptov.shrani(this);
                     }
@@ -105,15 +112,26 @@ public class PodrobnostiActivity extends AppCompatActivity {
         }
     }
 
-    private void posodobiVRepozitoriju(Recept novi) {
+    // Poišče obstoječi recept v repozitoriju, ki ustreza temu (po id-ju).
+    // Fallback na naslov omogoča delovanje za stare recepte brez id-ja.
+    private Recept najdiVRepozitoriju(Recept iskani) {
         List<Recept> vsi = RepozitorijReceptov.getRecepti();
-        for (int i = 0; i < vsi.size(); i++) {
-            Recept r = vsi.get(i);
-            if (r.naslov.equals(recept.naslov) && (r.opis != null && r.opis.equals(recept.opis))) {
-                vsi.set(i, novi);
-                break;
+        if (iskani.id != null) {
+            for (Recept r : vsi) {
+                if (iskani.id.equals(r.id)) {
+                    return r;
+                }
             }
         }
+        // Fallback: ujemanje po trenutnem (starem) naslovu, ki ga še drži this.recept
+        if (recept != null && recept.naslov != null) {
+            for (Recept r : vsi) {
+                if (recept.naslov.equals(r.naslov)) {
+                    return r;
+                }
+            }
+        }
+        return null;
     }
 
     private String formatirajCas(int minute) {

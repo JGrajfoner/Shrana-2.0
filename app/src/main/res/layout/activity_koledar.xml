@@ -4,26 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/ozadje"
     android:fitsSystemWindows="true">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Koledar"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:padding="16dp" />
+        style="@style/NaslovZaslona"
+        android:text="Koledar" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#CCCCCC" />
-
-    <CalendarView
-        android:id="@+id/koledar"
+    <com.google.android.material.card.MaterialCardView
+        style="@style/Kartica"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp">
+
+        <CalendarView
+            android:id="@+id/koledar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp" />
+
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/izbraniDatum"
@@ -32,9 +34,10 @@
         android:text="Izberi dan v koledarju"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="8dp" />
+        android:textColor="@color/besedilo_primarno"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="12dp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -54,6 +57,7 @@
         android:id="@+id/spodnjaNavigacija"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/povrsina"
         app:menu="@menu/bottom_nav_menu"
         app:labelVisibilityMode="labeled" />
 

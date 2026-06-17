@@ -1,9 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Shrana" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+    <style name="Theme.Shrana" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Vodilne barve -->
+        <item name="colorPrimary">@color/primarna</item>
+        <item name="colorPrimaryDark">@color/primarna_temna</item>
+        <item name="colorOnPrimary">@color/na_primarni</item>
+        <item name="colorPrimaryContainer">@color/primarna_svetla</item>
+        <item name="colorOnPrimaryContainer">@color/primarna_temna</item>
+
+        <item name="colorSecondary">@color/primarna</item>
+        <item name="colorSecondaryContainer">@color/primarna_svetla</item>
+        <item name="colorOnSecondaryContainer">@color/primarna_temna</item>
+
+        <item name="colorError">@color/opozorilo</item>
+        <item name="colorOnError">@color/na_opozorilu</item>
+
+        <!-- Ozadja in površine -->
+        <item name="android:colorBackground">@color/ozadje</item>
+        <item name="colorSurface">@color/povrsina</item>
+        <item name="colorSurfaceVariant">@color/povrsina_varianta</item>
+        <item name="colorOnSurface">@color/besedilo_primarno</item>
+        <item name="colorOnSurfaceVariant">@color/besedilo_sekundarno</item>
+        <item name="colorOutline">@color/locnica</item>
+
+        <!-- Sistemsko besedilo -->
+        <item name="android:textColorPrimary">@color/besedilo_primarno</item>
+        <item name="android:textColorSecondary">@color/besedilo_sekundarno</item>
+        <item name="android:textColorHint">@color/namig</item>
+
+        <!-- Statusna vrstica -->
+        <item name="android:statusBarColor">@color/ozadje</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
-    <style name="Theme.Shrana" parent="Base.Theme.Shrana" />
 </resources>

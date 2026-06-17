@@ -3,41 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:overScrollMode="never">
+    android:background="@color/ozadje"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="20dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Uredi recept"
-            android:textSize="24sp"
+            android:textSize="26sp"
             android:textStyle="bold"
+            android:textColor="@color/besedilo_primarno"
             android:layout_marginBottom="24dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="NASLOV"
-            android:textStyle="bold" />
+            style="@style/NaslovRazdelka"
+            android:text="NASLOV" />
 
-        <EditText
-            android:id="@+id/vnosNaslov"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Naslov recepta"
-            android:layout_marginBottom="16dp" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Polje"
+            android:layout_marginBottom="16dp"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/vnosNaslov"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Naslov recepta"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SLIKA"
-            android:textStyle="bold" />
+            style="@style/NaslovRazdelka"
+            android:text="SLIKA" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,18 +49,24 @@
             android:gravity="center_vertical"
             android:layout_marginBottom="16dp">
 
-            <ImageView
-                android:id="@+id/slikaPredogled"
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Kartica"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="#EEEEEE"
-                android:scaleType="centerCrop"
-                android:src="@android:drawable/ic_menu_gallery"
-                android:contentDescription="Predogled slike" />
+                app:cardCornerRadius="12dp">
+
+                <ImageView
+                    android:id="@+id/slikaPredogled"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    android:contentDescription="Predogled slike" />
+            </com.google.android.material.card.MaterialCardView>
 
             <Button
                 android:id="@+id/gumbIzberiSliko"
-                style="@style/Widget.Material3.Button.TonalButton"
+                style="@style/Gumb.Tonalni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -77,77 +86,76 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ČAS PRIPRAVE"
-                    android:textStyle="bold" />
+                    style="@style/NaslovRazdelka"
+                    android:text="ČAS PRIPRAVE" />
 
                 <Button
                     android:id="@+id/gumbCasPriprave"
-                    style="@style/Widget.Material3.Button.TonalButton"
+                    style="@style/Gumb.Tonalni"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="0 min"
-                    android:textColor="?attr/colorOnSecondaryContainer" />
+                    android:text="0 min" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="12dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ČAS KUHANJA"
-                    android:textStyle="bold" />
+                    style="@style/NaslovRazdelka"
+                    android:text="ČAS KUHANJA" />
 
                 <Button
                     android:id="@+id/gumbCasKuhanja"
-                    style="@style/Widget.Material3.Button.TonalButton"
+                    style="@style/Gumb.Tonalni"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="0 min"
-                    android:textColor="?attr/colorOnSecondaryContainer" />
+                    android:text="0 min" />
             </LinearLayout>
         </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="KALORIJE"
-            android:textStyle="bold" />
+            style="@style/NaslovRazdelka"
+            android:text="KALORIJE" />
 
-        <EditText
-            android:id="@+id/vnosKalorije"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="kcal"
-            android:inputType="number"
-            android:layout_marginBottom="16dp" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Polje"
+            android:layout_marginBottom="16dp"
+            app:hintEnabled="false">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="OPIS"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/vnosOpis"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Kratek opis recepta"
-            android:minLines="2"
-            android:gravity="top"
-            android:layout_marginBottom="16dp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/vnosKalorije"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="kcal"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SESTAVINE"
-            android:textStyle="bold" />
+            style="@style/NaslovRazdelka"
+            android:text="OPIS" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Polje"
+            android:layout_marginBottom="16dp"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/vnosOpis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Kratek opis recepta"
+                android:inputType="textMultiLine"
+                android:minLines="2"
+                android:gravity="top" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            style="@style/NaslovRazdelka"
+            android:text="SESTAVINE" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -155,26 +163,41 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <EditText
-                android:id="@+id/vnosImeSestavine"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Polje"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:hint="Ime" />
+                app:hintEnabled="false">
 
-            <EditText
-                android:id="@+id/vnosKolicinaSestavine"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/vnosImeSestavine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ime"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Polje"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Kol."
-                android:inputType="numberDecimal" />
+                android:layout_marginStart="6dp"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/vnosKolicinaSestavine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Kol."
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
+                android:layout_marginStart="6dp"
                 app:hintEnabled="false">
 
                 <AutoCompleteTextView
@@ -190,7 +213,7 @@
 
             <Button
                 android:id="@+id/gumbDodajSestavino"
-                style="@style/Widget.Material3.Button.TonalButton"
+                style="@style/Gumb.Tonalni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+"
@@ -205,10 +228,8 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="OZNAKE"
-            android:textStyle="bold" />
+            style="@style/NaslovRazdelka"
+            android:text="OZNAKE" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -217,16 +238,23 @@
             android:gravity="center_vertical"
             android:layout_marginBottom="4dp">
 
-            <EditText
-                android:id="@+id/vnosOznaka"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Polje"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Vnesi oznako" />
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/vnosOznaka"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Vnesi oznako"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/gumbDodajOznako"
-                style="@style/Widget.Material3.Button.TonalButton"
+                style="@style/Gumb.Tonalni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+"
@@ -240,20 +268,23 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="PRIPRAVA"
-            android:textStyle="bold" />
+            style="@style/NaslovRazdelka"
+            android:text="PRIPRAVA" />
 
-        <EditText
-            android:id="@+id/vnosPriprava"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Opišite postopek priprave..."
-            android:inputType="textMultiLine"
-            android:minLines="5"
-            android:gravity="top"
-            android:layout_marginBottom="24dp" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Polje"
+            android:layout_marginBottom="24dp"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/vnosPriprava"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Opišite postopek priprave..."
+                android:inputType="textMultiLine"
+                android:minLines="5"
+                android:gravity="top" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -262,23 +293,21 @@
 
             <Button
                 android:id="@+id/gumbPreklici"
+                style="@style/Gumb.Opozorilo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
-                android:text="Prekliči"
-                app:backgroundTint="#E57373"
-                android:textColor="#FFFFFF" />
+                android:text="Prekliči" />
 
             <Button
                 android:id="@+id/gumbPosodobi"
+                style="@style/Gumb.Primarni"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="8dp"
-                android:text="Posodobi"
-                app:backgroundTint="#FFEB3B"
-                android:textColor="#000000" />
+                android:text="Posodobi" />
         </LinearLayout>
 
     </LinearLayout>

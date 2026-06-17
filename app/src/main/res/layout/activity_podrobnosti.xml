@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/ozadje"
     android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="20dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -22,7 +23,8 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/arrow_back_24px"
-                android:background="?attr/selectableItemBackground"
+                app:tint="@color/besedilo_primarno"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Nazaj"
                 android:layout_alignParentStart="true" />
 
@@ -31,18 +33,17 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/edit_24px"
-                android:background="?attr/selectableItemBackground"
+                app:tint="@color/primarna"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Uredi"
                 android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
 
         <com.google.android.material.card.MaterialCardView
+            style="@style/Kartica"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="0dp">
+            android:layout_height="220dp">
 
             <ImageView
                 android:id="@+id/slika"
@@ -62,7 +63,7 @@
             android:textSize="26sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:textColor="@color/besedilo_primarno" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroupOznakePrikaz"
@@ -77,7 +78,7 @@
             tools:text="Kratek opis recepta"
             android:textSize="16sp"
             android:layout_marginTop="8dp"
-            android:textColor="?android:attr/textColorSecondary" />
+            android:textColor="@color/besedilo_sekundarno" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -92,9 +93,10 @@
                 android:layout_weight="1"
                 tools:text="Priprava: 15 min"
                 android:textSize="14sp"
+                android:textColor="@color/besedilo_sekundarno"
                 app:drawableStartCompat="@drawable/grocery_24px"
                 android:drawablePadding="8dp"
-                app:drawableTint="?android:attr/textColorSecondary" />
+                app:drawableTint="@color/primarna" />
 
             <TextView
                 android:id="@+id/casKuhanja"
@@ -103,9 +105,10 @@
                 android:layout_weight="1"
                 tools:text="Kuhanje: 30 min"
                 android:textSize="14sp"
+                android:textColor="@color/besedilo_sekundarno"
                 app:drawableStartCompat="@drawable/skillet_24px"
                 android:drawablePadding="8dp"
-                app:drawableTint="?android:attr/textColorSecondary" />
+                app:drawableTint="@color/primarna" />
         </LinearLayout>
 
         <TextView
@@ -115,14 +118,13 @@
             tools:text="450 kcal"
             android:textSize="14sp"
             android:layout_marginTop="8dp"
+            android:textColor="@color/besedilo_sekundarno"
             app:drawableStartCompat="@drawable/local_fire_department_24px"
             android:drawablePadding="8dp"
-            app:drawableTint="?android:attr/textColorSecondary" />
+            app:drawableTint="@color/primarna" />
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#DDDDDD"
+            style="@style/Locnica"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp" />
 
@@ -139,16 +141,15 @@
                 android:text="SESTAVINE"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:textColor="@color/besedilo_primarno" />
 
             <Button
                 android:id="@+id/gumbNaSeznam"
-                style="@style/Widget.Material3.Button.TextButton"
+                style="@style/Gumb.Tekstovni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="na seznam"
-                app:icon="@drawable/add_shopping_cart_24px"
-                android:textAllCaps="false" />
+                app:icon="@drawable/add_shopping_cart_24px" />
         </LinearLayout>
 
         <TextView
@@ -157,13 +158,12 @@
             android:layout_height="wrap_content"
             android:text="-"
             android:textSize="16sp"
+            android:lineSpacingExtra="4dp"
             android:layout_marginTop="8dp"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:textColor="@color/besedilo_primarno" />
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#DDDDDD"
+            style="@style/Locnica"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp" />
 
@@ -173,7 +173,7 @@
             android:text="PRIPRAVA"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:textColor="@color/besedilo_primarno" />
 
         <TextView
             android:id="@+id/priprava"
@@ -181,8 +181,9 @@
             android:layout_height="wrap_content"
             android:text="-"
             android:textSize="16sp"
+            android:lineSpacingExtra="4dp"
             android:layout_marginTop="8dp"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:textColor="@color/besedilo_primarno" />
 
     </LinearLayout>
 </ScrollView>

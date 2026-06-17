@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         recepti = RepozitorijReceptov.getRecepti();
 
         if (recepti.isEmpty()) {
-            recepti.add(new Recept("Piščanec s paradižnikom", 15, 30, 450, "Okusen recept", 
+            recepti.add(new Recept("Piščanec s paradižnikom", 15, 30, 450, "Okusen recept",
                     new ArrayList<>(), "Priprava...", new ArrayList<>()));
             RepozitorijReceptov.shrani(this);
         }
@@ -108,6 +108,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
         nastaviNavigacijo();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Ob vrnitvi iz podrobnosti/urejanja osvežimo seznam,
+        // saj se je morda spremenil naslov, slika ali priljubljenost recepta.
+        if (adapter != null) {
+            adapter.osvezi();
+        }
     }
 
     private void nastaviNavigacijo() {
@@ -183,6 +193,13 @@ public class MainActivity extends AppCompatActivity {
             notifyItemInserted(prikazani.size() - 1);
         }
 
+        // Ponovno uskladi prikazani seznam z glavnim in osveži celoten prikaz.
+        public void osvezi() {
+            prikazani.clear();
+            prikazani.addAll(vsiRecepti);
+            notifyDataSetChanged();
+        }
+
         public void odstrani(int pozicija) {
             if (pozicija >= 0 && pozicija < prikazani.size()) {
                 Recept r = prikazani.get(pozicija);
@@ -234,12 +251,12 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull ReceptViewHolder holder, int position) {
             Recept r = prikazani.get(position);
             holder.naslov.setText(r.naslov);
-            
+
             int skupniMin = r.getSkupniCas();
             int ure = skupniMin / 60;
             int minute = skupniMin % 60;
             String casTekst = (ure > 0 ? ure + "h " : "") + minute + "m";
-            
+
             holder.cas.setText(casTekst);
             holder.kalorije.setText(r.kalorije + " kcal");
             holder.opis.setText(r.opis);

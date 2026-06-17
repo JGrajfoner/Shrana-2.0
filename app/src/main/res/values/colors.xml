@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- ===== Vodilna barva: umirjena žajbljeva zelena ===== -->
+    <color name="primarna">#5B7B6F</color>
+    <color name="primarna_temna">#41594F</color>
+    <color name="primarna_svetla">#DCE6E1</color>
+    <color name="na_primarni">#FFFFFF</color>
+
+    <!-- ===== Poudarek / opozorilo ===== -->
+    <color name="opozorilo">#C26B5A</color>
+    <color name="na_opozorilu">#FFFFFF</color>
+
+    <!-- ===== Nevtralne (ozadja, besedilo, ločnice) ===== -->
+    <color name="ozadje">#FAF8F5</color>
+    <color name="povrsina">#FFFFFF</color>
+    <color name="povrsina_varianta">#F1EFEA</color>
+    <color name="besedilo_primarno">#1F2421</color>
+    <color name="besedilo_sekundarno">#5E6660</color>
+    <color name="locnica">#E4E1DB</color>
+    <color name="namig">#9AA39D</color>
 </resources>

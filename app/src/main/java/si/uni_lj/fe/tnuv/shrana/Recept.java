@@ -3,8 +3,10 @@ package si.uni_lj.fe.tnuv.shrana;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Recept implements Serializable {
+    public String id;            // unikatni identifikator recepta
     public String naslov;
     public int casPriprave; // v minutah
     public int casKuhanja;  // v minutah
@@ -34,6 +36,7 @@ public class Recept implements Serializable {
     }
 
     public Recept() {
+        this.id = UUID.randomUUID().toString();
         this.sestavine = new ArrayList<>();
         this.oznake = new ArrayList<>();
     }
@@ -45,6 +48,7 @@ public class Recept implements Serializable {
 
     public Recept(String naslov, int casPriprave, int casKuhanja, int kalorije, String opis,
                   List<Sestavina> sestavine, String priprava, List<String> oznake, String slikaUri) {
+        this.id = UUID.randomUUID().toString();
         this.naslov = naslov;
         this.casPriprave = casPriprave;
         this.casKuhanja = casKuhanja;
@@ -59,5 +63,20 @@ public class Recept implements Serializable {
 
     public int getSkupniCas() {
         return casPriprave + casKuhanja;
+    }
+
+    // Kopira vsa polja iz drugega recepta, vendar OHRANI lasten id.
+    // Tako lahko posodobimo obstoječi objekt na mestu, ne da bi ga zamenjali.
+    public void prepisiIz(Recept drugi) {
+        this.naslov = drugi.naslov;
+        this.casPriprave = drugi.casPriprave;
+        this.casKuhanja = drugi.casKuhanja;
+        this.kalorije = drugi.kalorije;
+        this.opis = drugi.opis;
+        this.sestavine = drugi.sestavine;
+        this.priprava = drugi.priprava;
+        this.oznake = drugi.oznake;
+        this.slikaUri = drugi.slikaUri;
+        this.priljubljen = drugi.priljubljen;
     }
 }

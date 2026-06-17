@@ -1,54 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Kartica"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:layout_margin="8dp"
-    android:background="#F0F0F0">
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="6dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:fitsSystemWindows="true">
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <!-- Prikaz odštevanja -->
-        <TextView
-            android:id="@+id/prikazCasa"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="00:00:00"
-            android:textSize="32sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <!-- Pavza / nadaljuj -->
-        <ImageButton
-            android:id="@+id/gumbPavza"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@android:drawable/ic_media_pause"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="Pavza" />
+            <!-- Prikaz odštevanja -->
+            <TextView
+                android:id="@+id/prikazCasa"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="00:00:00"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:textColor="@color/besedilo_primarno" />
 
-        <!-- Odstrani -->
-        <ImageButton
-            android:id="@+id/gumbOdstrani"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="Odstrani" />
+            <!-- Pavza / nadaljuj -->
+            <ImageButton
+                android:id="@+id/gumbPavza"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_media_pause"
+                app:tint="@color/primarna"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Pavza" />
+
+            <!-- Odstrani -->
+            <ImageButton
+                android:id="@+id/gumbOdstrani"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                app:tint="@color/opozorilo"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Odstrani" />
+        </LinearLayout>
+
+        <!-- Opis časovnika -->
+        <TextView
+            android:id="@+id/opisCasovnika"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="opis"
+            android:textSize="16sp"
+            android:textColor="@color/besedilo_sekundarno" />
+
     </LinearLayout>
 
-    <!-- Opis časovnika -->
-    <TextView
-        android:id="@+id/opisCasovnika"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="opis"
-        android:textSize="18sp" />
-
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

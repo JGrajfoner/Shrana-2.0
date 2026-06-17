@@ -4,38 +4,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/ozadje"
     android:fitsSystemWindows="true">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nakupovalni seznam"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:padding="16dp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#CCCCCC" />
+        style="@style/NaslovZaslona"
+        android:text="Nakupovalni seznam" />
 
     <!-- Vrstica za ročno dodajanje -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
         android:gravity="center_vertical">
 
-        <EditText
-            android:id="@+id/vnosPostavka"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Polje"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Dodaj postavko ..." />
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/vnosPostavka"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Dodaj postavko ..."
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/gumbDodaj"
+            style="@style/Gumb.Tonalni"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+"
@@ -46,20 +49,26 @@
         android:id="@+id/seznamPostavk"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp" />
 
     <Button
         android:id="@+id/gumbPocisti"
+        style="@style/Gumb.Tekstovni"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_margin="8dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="4dp"
         android:text="Počisti odkljukane" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/spodnjaNavigacija"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/povrsina"
         app:menu="@menu/bottom_nav_menu"
         app:labelVisibilityMode="labeled" />
 
