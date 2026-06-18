@@ -56,6 +56,14 @@ public class PomocnikActivity extends AppCompatActivity {
     private BottomNavigationView spodnjaNavigacija;
     private GenerativeModelFutures model;
     private Executor executor;
+    private StringBuilder zgodovinaPogovora = new StringBuilder();
+    private static final String NAVODILO_POMOCNIKU =
+            "Si kuharski pomočnik v aplikaciji sHrana. "
+                    + "Odgovarjaj v slovenščini, kratko, prijazno in praktično. "
+                    + "Pomagaj pri receptih, sestavinah, zamenjavah sestavin, "
+                    + "načrtovanju obrokov, kuhanju in nakupovalnem seznamu. "
+                    + "Če uporabnik sprašuje o pokvarjeni hrani, alergijah ali varnosti hrane, "
+                    + "ga opozori na previdnost.";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,13 +228,11 @@ public class PomocnikActivity extends AppCompatActivity {
     }
 
     private void posljiGemini(String vprasanje) {
-        String prompt = "Si kuharski pomočnik v aplikaciji sHrana. "
-                + "Odgovarjaj v slovenščini, kratko, prijazno in praktično. "
-                + "Pomagaj pri receptih, sestavinah, zamenjavah sestavin, "
-                + "načrtovanju obrokov, kuhanju in nakupovalnem seznamu. "
-                + "Če uporabnik sprašuje o pokvarjeni hrani, alergijah ali varnosti hrane, "
-                + "ga opozori na previdnost. "
-                + "Vprašanje uporabnika: " + vprasanje;
+        String prompt = NAVODILO_POMOCNIKU
+                + "\n\nDosedanji pogovor:\n"
+                + zgodovinaPogovora.toString()
+                + "\nUporabnik: " + vprasanje
+                + "\nPomočnik:";
 
         Content vsebina = new Content.Builder()
                 .addText(prompt)
@@ -243,12 +249,34 @@ public class PomocnikActivity extends AppCompatActivity {
                     besediloOdgovora = "Žal nisem dobil odgovora.";
                 }
 
+                zgodovinaPogovora.append("Uporabnik: ")
+                        .append(vprasanje)
+                        .append("\n");
+
+                zgodovinaPogovora.append("Pomočnik: ")
+                        .append(besediloOdgovora.trim())
+                        .append("\n\n");
+
+                skrajsajZgodovinoPogovora();
+
                 if (oblacekRazmisljanja != null) {
                     oblacekRazmisljanja.setText(pretvoriMarkdownVBesedilo(besediloOdgovora.trim()));
                     oblacekRazmisljanja = null;
                     scrollNaDno();
                 } else {
                     dodajSporocilo(besediloOdgovora.trim(), false);
+                }
+            }
+
+            private void skrajsajZgodovinoPogovora() {
+                int najvecZnakov = 8000;
+
+                if (zgodovinaPogovora.length() > najvecZnakov) {
+                    String skrajsana = zgodovinaPogovora.substring(
+                            zgodovinaPogovora.length() - najvecZnakov
+                    );
+
+                    zgodovinaPogovora = new StringBuilder(skrajsana);
                 }
             }
 
