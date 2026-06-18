@@ -9,13 +9,27 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import java.util.ArrayList;
 import java.util.Locale;
+
+
+// Importi za Firebase AI
+import androidx.core.content.ContextCompat;
+
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+
+import com.google.firebase.ai.FirebaseAI;
+import com.google.firebase.ai.GenerativeModel;
+import com.google.firebase.ai.java.GenerativeModelFutures;
+import com.google.firebase.ai.type.Content;
+import com.google.firebase.ai.type.GenerateContentResponse;
+import com.google.firebase.ai.type.GenerativeBackend;
+
+import java.util.concurrent.Executor;
 
 public class PomocnikActivity extends AppCompatActivity {
 
@@ -26,6 +40,8 @@ public class PomocnikActivity extends AppCompatActivity {
     private Button gumbPoslji;
     private ImageButton gumbMikrofon;
     private BottomNavigationView spodnjaNavigacija;
+    private GenerativeModelFutures model;
+    private Executor executor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +54,11 @@ public class PomocnikActivity extends AppCompatActivity {
         gumbMikrofon = findViewById(R.id.gumbMikrofon);
         spodnjaNavigacija = findViewById(R.id.spodnjaNavigacija);
 
+        nastaviGemini();
         nastaviZacetnoBesedilo();
         nastaviGumbe();
         nastaviSpodnjoNavigacijo();
+
     }
 
     private void nastaviZacetnoBesedilo() {
@@ -65,14 +83,9 @@ public class PomocnikActivity extends AppCompatActivity {
 
         vnosSporocila.setText("");
 
-        // To je samo začasni testni odgovor.
-        // Kasneje bomo tukaj poklicali Gemini / Firebase AI.
-        String odgovor = ustvariTestniOdgovor(sporocilo);
-        dodajVPogovor("Pomočnik: " + odgovor);
-    }
+        dodajVPogovor("Pomočnik razmišlja ...");
 
-    private String ustvariTestniOdgovor(String vprasanje) {
-        return "Zaenkrat sem testni pomočnik. Kasneje bom znal odgovoriti na vprašanje: \"" + vprasanje + "\".";
+        posljiGemini(sporocilo);
     }
 
     private void dodajVPogovor(String novoBesedilo) {
@@ -97,6 +110,50 @@ public class PomocnikActivity extends AppCompatActivity {
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, "Govorni vnos na tej napravi ni podprt.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void nastaviGemini() {
+        executor = ContextCompat.getMainExecutor(this);
+
+        GenerativeModel ai = FirebaseAI.getInstance(GenerativeBackend.googleAI())
+                .generativeModel("gemini-2.5-flash");
+
+        model = GenerativeModelFutures.from(ai);
+    }
+
+    private void posljiGemini(String vprasanje) {
+        String prompt = "Si kuharski pomočnik v aplikaciji sHrana. "
+                + "Odgovarjaj v slovenščini, kratko, prijazno in praktično. "
+                + "Pomagaj pri receptih, sestavinah, zamenjavah sestavin, "
+                + "načrtovanju obrokov, kuhanju in nakupovalnem seznamu. "
+                + "Če uporabnik sprašuje o pokvarjeni hrani, alergijah ali varnosti hrane, "
+                + "ga opozori na previdnost. "
+                + "Vprašanje uporabnika: " + vprasanje;
+
+        Content vsebina = new Content.Builder()
+                .addText(prompt)
+                .build();
+
+        ListenableFuture<GenerateContentResponse> odgovor = model.generateContent(vsebina);
+
+        Futures.addCallback(odgovor, new FutureCallback<GenerateContentResponse>() {
+            @Override
+            public void onSuccess(GenerateContentResponse result) {
+                String besediloOdgovora = result.getText();
+
+                if (besediloOdgovora == null || besediloOdgovora.trim().isEmpty()) {
+                    dodajVPogovor("Pomočnik: Žal nisem dobil odgovora.");
+                } else {
+                    dodajVPogovor("Pomočnik: " + besediloOdgovora.trim());
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                dodajVPogovor("Pomočnik: Prišlo je do napake pri povezavi z Gemini.");
+                Toast.makeText(PomocnikActivity.this, "Napaka: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }, executor);
     }
 
     @Override
