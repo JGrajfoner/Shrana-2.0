@@ -43,7 +43,7 @@
         android:id="@+id/gumbDodaj"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@android:drawable/ic_input_add"
+        android:src="@drawable/add_24px"
         app:tint="@color/primarna"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="Dodaj recept" />

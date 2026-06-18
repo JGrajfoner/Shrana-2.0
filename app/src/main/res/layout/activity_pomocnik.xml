@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@android:color/white">
+
+    <!-- Naslov strani, podobno kot na zavihku Časovniki -->
+    <TextView
+        android:id="@+id/naslovPomocnik"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pomočnik"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="#1F2A26"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="32dp"
+        android:paddingBottom="16dp" />
+
+    <!-- Pogovor s pomočnikom -->
+    <ScrollView
+        android:id="@+id/drsnikPogovora"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/besediloPogovora"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pomočnik: Živjo! Kako ti lahko pomagam pri kuhanju?"
+            android:textSize="16sp"
+            android:lineSpacingExtra="4dp"
+            android:textColor="#1F2A26" />
+
+    </ScrollView>
+
+    <!-- Vnos sporočila + mikrofon + pošlji -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="24dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="12dp"
+        android:gravity="center_vertical"
+        android:background="@android:color/white">
+
+        <EditText
+            android:id="@+id/vnosSporocila"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Vprašaj pomočnika ..."
+            android:textColor="#1F2A26"
+            android:textColorHint="#8E9995"
+            android:minHeight="48dp"
+            android:singleLine="false"
+            android:maxLines="3"
+            android:inputType="textMultiLine"
+            android:backgroundTint="#6B8377" />
+
+        <ImageButton
+            android:id="@+id/gumbMikrofon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/mic_24px"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="Govorni vnos" />
+
+        <Button
+            android:id="@+id/gumbPoslji"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:layout_marginStart="8dp"
+            android:text="Pošlji"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:backgroundTint="#6B8377" />
+
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/spodnjaNavigacija"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/povrsina"
+        app:menu="@menu/bottom_nav_menu"
+        app:labelVisibilityMode="labeled" />
+
+</LinearLayout>
