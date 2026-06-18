@@ -28,19 +28,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
+        android:fillViewport="true"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp">
 
-        <TextView
-            android:id="@+id/besediloPogovora"
+        <LinearLayout
+            android:id="@+id/vsebnikPogovora"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pomočnik: Živjo! Kako ti lahko pomagam pri kuhanju?"
-            android:textSize="16sp"
-            android:lineSpacingExtra="4dp"
-            android:textColor="#1F2A26" />
+            android:orientation="vertical" />
 
     </ScrollView>
 

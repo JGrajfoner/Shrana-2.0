@@ -7,12 +7,24 @@ import android.speech.RecognizerIntent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.Locale;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
+import android.view.Gravity;
+import android.view.View;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 // Importi za Firebase AI
@@ -35,7 +47,9 @@ public class PomocnikActivity extends AppCompatActivity {
 
     private static final int ZAHTEVA_GOVOR = 100;
 
-    private TextView besediloPogovora;
+    private ScrollView drsnikPogovora;
+    private LinearLayout vsebnikPogovora;
+    private TextView oblacekRazmisljanja;
     private EditText vnosSporocila;
     private Button gumbPoslji;
     private ImageButton gumbMikrofon;
@@ -48,7 +62,8 @@ public class PomocnikActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pomocnik);
 
-        besediloPogovora = findViewById(R.id.besediloPogovora);
+        drsnikPogovora = findViewById(R.id.drsnikPogovora);
+        vsebnikPogovora = findViewById(R.id.vsebnikPogovora);
         vnosSporocila = findViewById(R.id.vnosSporocila);
         gumbPoslji = findViewById(R.id.gumbPoslji);
         gumbMikrofon = findViewById(R.id.gumbMikrofon);
@@ -62,7 +77,8 @@ public class PomocnikActivity extends AppCompatActivity {
     }
 
     private void nastaviZacetnoBesedilo() {
-        besediloPogovora.setText("Pomočnik: Živjo! Kako ti lahko pomagam pri kuhanju?");
+        vsebnikPogovora.removeAllViews();
+        dodajSporocilo("Živjo! Kako ti lahko pomagam pri kuhanju?", false);
     }
 
     private void nastaviGumbe() {
@@ -79,19 +95,13 @@ public class PomocnikActivity extends AppCompatActivity {
             return;
         }
 
-        dodajVPogovor("Ti: " + sporocilo);
+        dodajSporocilo(sporocilo, true);
 
         vnosSporocila.setText("");
 
-        dodajVPogovor("Pomočnik razmišlja ...");
+        oblacekRazmisljanja = dodajSporocilo("Pomočnik razmišlja ...", false);
 
         posljiGemini(sporocilo);
-    }
-
-    private void dodajVPogovor(String novoBesedilo) {
-        String trenutnoBesedilo = besediloPogovora.getText().toString();
-
-        besediloPogovora.setText(trenutnoBesedilo + "\n\n" + novoBesedilo);
     }
 
     private void zacniGovorniVnos() {
@@ -110,6 +120,94 @@ public class PomocnikActivity extends AppCompatActivity {
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, "Govorni vnos na tej napravi ni podprt.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void scrollNaDno() {
+        drsnikPogovora.post(() -> drsnikPogovora.fullScroll(View.FOCUS_DOWN));
+    }
+
+    private TextView dodajSporocilo(String besedilo, boolean jeUporabnik) {
+        TextView oblacek = new TextView(this);
+
+        oblacek.setText(pretvoriMarkdownVBesedilo(besedilo));
+        oblacek.setTextSize(16);
+        oblacek.setLineSpacing(4, 1);
+
+        int notranjiOdmikHorizontalno = dp(14);
+        int notranjiOdmikVertikalno = dp(10);
+        oblacek.setPadding(
+                notranjiOdmikHorizontalno,
+                notranjiOdmikVertikalno,
+                notranjiOdmikHorizontalno,
+                notranjiOdmikVertikalno
+        );
+
+        GradientDrawable ozadje = new GradientDrawable();
+        ozadje.setCornerRadius(dp(18));
+
+        if (jeUporabnik) {
+            ozadje.setColor(Color.parseColor("#6B8377"));
+            oblacek.setTextColor(Color.WHITE);
+        } else {
+            ozadje.setColor(Color.parseColor("#EEF4F1"));
+            oblacek.setTextColor(Color.parseColor("#1F2A26"));
+        }
+
+        oblacek.setBackground(ozadje);
+
+        LinearLayout.LayoutParams parametri = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+
+        parametri.setMargins(
+                jeUporabnik ? dp(56) : 0,
+                dp(6),
+                jeUporabnik ? 0 : dp(56),
+                dp(6)
+        );
+
+        parametri.gravity = jeUporabnik ? Gravity.END : Gravity.START;
+
+        vsebnikPogovora.addView(oblacek, parametri);
+
+        scrollNaDno();
+
+        return oblacek;
+    }
+
+    private CharSequence pretvoriMarkdownVBesedilo(String besedilo) {
+        SpannableStringBuilder rezultat = new SpannableStringBuilder();
+
+        Pattern vzorec = Pattern.compile("\\*\\*(.*?)\\*\\*");
+        Matcher matcher = vzorec.matcher(besedilo);
+
+        int zadnjiKonec = 0;
+
+        while (matcher.find()) {
+            rezultat.append(besedilo.substring(zadnjiKonec, matcher.start()));
+
+            int zacetekBold = rezultat.length();
+            rezultat.append(matcher.group(1));
+            int konecBold = rezultat.length();
+
+            rezultat.setSpan(
+                    new StyleSpan(Typeface.BOLD),
+                    zacetekBold,
+                    konecBold,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+
+            zadnjiKonec = matcher.end();
+        }
+
+        rezultat.append(besedilo.substring(zadnjiKonec));
+
+        return rezultat;
+    }
+
+    private int dp(int vrednost) {
+        return (int) (vrednost * getResources().getDisplayMetrics().density);
     }
 
     private void nastaviGemini() {
@@ -142,15 +240,32 @@ public class PomocnikActivity extends AppCompatActivity {
                 String besediloOdgovora = result.getText();
 
                 if (besediloOdgovora == null || besediloOdgovora.trim().isEmpty()) {
-                    dodajVPogovor("Pomočnik: Žal nisem dobil odgovora.");
+                    besediloOdgovora = "Žal nisem dobil odgovora.";
+                }
+
+                if (oblacekRazmisljanja != null) {
+                    oblacekRazmisljanja.setText(pretvoriMarkdownVBesedilo(besediloOdgovora.trim()));
+                    oblacekRazmisljanja = null;
+                    scrollNaDno();
                 } else {
-                    dodajVPogovor("Pomočnik: " + besediloOdgovora.trim());
+                    dodajSporocilo(besediloOdgovora.trim(), false);
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
-                dodajVPogovor("Pomočnik: Prišlo je do napake pri povezavi z Gemini.");
+                android.util.Log.e("PomocnikActivity", "Napaka pri Gemini klicu", t);
+
+                String napaka = "Prišlo je do napake pri povezavi z Gemini.";
+
+                if (oblacekRazmisljanja != null) {
+                    oblacekRazmisljanja.setText(napaka);
+                    oblacekRazmisljanja = null;
+                    scrollNaDno();
+                } else {
+                    dodajSporocilo(napaka, false);
+                }
+
                 Toast.makeText(PomocnikActivity.this, "Napaka: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         }, executor);
