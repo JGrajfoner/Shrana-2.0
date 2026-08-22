@@ -24,7 +24,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.List;
 
 public class CasovnikiActivity extends AppCompatActivity
-        implements RepozitorijCasovnikov.Poslusalec {
+        implements RepozitorijCasovnikov.Poslusalec, RepozitorijCasovnikov.CasovnikiObvestilo {
 
     private List<RepozitorijCasovnikov.Casovnik> casovniki;
     private CasovnikAdapter adapter;
@@ -33,6 +33,9 @@ public class CasovnikiActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_casovniki);
+
+        // Inicializira obvestila
+        RepozitorijCasovnikov.inicializirajObvestila(this);
 
         casovniki = RepozitorijCasovnikov.getCasovniki();
 
@@ -44,6 +47,28 @@ public class CasovnikiActivity extends AppCompatActivity
         findViewById(R.id.gumbDodaj).setOnClickListener(v -> odpriDialogZaNovCasovnik());
 
         nastaviNavigacijo();
+        
+        // Preveri ali je treba prikazati popup
+        handleNotificationIntent(getIntent());
+    }
+    
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleNotificationIntent(intent);
+    }
+    
+    private void handleNotificationIntent(Intent intent) {
+        if (intent != null && intent.getBooleanExtra("show_popup", false)) {
+            String opisCasovnika = intent.getStringExtra("popup_text");
+            if (opisCasovnika != null) {
+                prikaziObvestilo(opisCasovnika);
+            }
+            // Prekliči obvestilo
+            if (RepozitorijCasovnikov.notificationManager != null) {
+                RepozitorijCasovnikov.notificationManager.cancel(RepozitorijCasovnikov.NOTIFICATION_ID);
+            }
+        }
     }
 
     // Ko je zaslon viden, se naročimo na posodobitve in osvežimo prikaz
@@ -51,6 +76,7 @@ public class CasovnikiActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         RepozitorijCasovnikov.nastaviPoslusalca(this, this);
+        RepozitorijCasovnikov.nastaviCasovnikiVOspredju(true, this);
         adapter.notifyDataSetChanged(); // pokažemo trenutno stanje
         posodobiPraznoStanje();
     }
@@ -60,6 +86,7 @@ public class CasovnikiActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
         RepozitorijCasovnikov.odjaviPoslusalca();
+        RepozitorijCasovnikov.nastaviCasovnikiVOspredju(false, null);
     }
 
     // Pokaže navodilo, če ni časovnikov; sicer ga skrije
@@ -82,8 +109,6 @@ public class CasovnikiActivity extends AppCompatActivity
     }
 
     private void odpriDialogZaNovCasovnik() {
-        // Najprej izbira ure in minut prek urnega izbirnika (24-urni način).
-        // Sekunde se ne vnašajo, a odštevanje kasneje teče sekundo za sekundo.
         TimePickerDialog izbirnikCasa = new TimePickerDialog(
                 this,
                 (view, ure, minute) -> {
@@ -93,22 +118,19 @@ public class CasovnikiActivity extends AppCompatActivity
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    // Ko je čas izbran, vprašamo še za opis.
                     vprasajZaOpisInDodaj(milis);
                 },
-                0, 0, true // začetni čas 00:00, true = 24-urni način
+                0, 0, true
         );
         izbirnikCasa.setTitle("Nastavi trajanje");
         izbirnikCasa.show();
     }
 
-    // Kratek dialog z enim poljem za opis časovnika.
     private void vprasajZaOpisInDodaj(long milis) {
         final EditText vnosOpis = new EditText(this);
         vnosOpis.setHint("Opis (npr. Krompir)");
         vnosOpis.setSingleLine(true);
 
-        // Malce odmika, da polje ni nalepljeno na rob dialoga.
         int rob = (int) (24 * getResources().getDisplayMetrics().density);
         android.widget.FrameLayout ovoj = new android.widget.FrameLayout(this);
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
@@ -161,7 +183,18 @@ public class CasovnikiActivity extends AppCompatActivity
         });
     }
 
-    // ===== Adapter za časovnike =====
+    @Override
+    public void prikaziObvestilo(String opisCasovnika) {
+        new AlertDialog.Builder(this)
+                .setTitle("⏰ Časovnik je potekel!")
+                .setMessage("Časovnik: " + opisCasovnika)
+                .setPositiveButton("Prekini", (dialog, which) -> {
+                    RepozitorijCasovnikov.prekiniAlarm();
+                })
+                .setCancelable(false)
+                .show();
+    }
+
     static class CasovnikAdapter extends RecyclerView.Adapter<CasovnikAdapter.CasovnikViewHolder> {
 
         private final List<RepozitorijCasovnikov.Casovnik> casovniki;
@@ -185,7 +218,6 @@ public class CasovnikiActivity extends AppCompatActivity
             holder.opis.setText(c.opis);
             holder.prikazCasa.setText(formatCas(c.preostaloMilis));
 
-            // Ikona pavze/predvajaj glede na stanje
             holder.gumbPavza.setImageResource(c.tece
                     ? android.R.drawable.ic_media_pause
                     : android.R.drawable.ic_media_play);

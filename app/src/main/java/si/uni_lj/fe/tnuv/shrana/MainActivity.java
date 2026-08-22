@@ -1,7 +1,10 @@
 package si.uni_lj.fe.tnuv.shrana;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +14,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<Recept> recepti;
     private ReceptAdapter adapter;
+    private static final int PERMISSION_REQUEST_CODE = 123;
 
     private final androidx.activity.result.ActivityResultLauncher<Intent> dodajLauncher =
             registerForActivityResult(
@@ -46,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Inicializacija obvestil takoj ob zagonu aplikacije
+        RepozitorijCasovnikov.inicializirajObvestila(this);
+        preveriDovoljenjaZaObvestila();
 
         RepozitorijReceptov.nalozi(this);
         recepti = RepozitorijReceptov.getRecepti();
@@ -99,9 +110,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         final boolean[] samoPriljubljeni = {false};
-        findViewById(R.id.gumbPriljubljeni).setOnClickListener(v -> {
+        ImageButton gumbPriljubljeni = findViewById(R.id.gumbPriljubljeni);
+        gumbPriljubljeni.setOnClickListener(v -> {
             samoPriljubljeni[0] = !samoPriljubljeni[0];
             adapter.prikaziPriljubljene(samoPriljubljeni[0]);
+            
+            gumbPriljubljeni.setImageResource(samoPriljubljeni[0] 
+                ? R.drawable.ic_star_filled 
+                : R.drawable.ic_star_outline);
+                
             Toast.makeText(this,
                     samoPriljubljeni[0] ? "Samo priljubljeni" : "Vsi recepti",
                     Toast.LENGTH_SHORT).show();
@@ -113,11 +130,17 @@ public class MainActivity extends AppCompatActivity {
         nastaviNavigacijo();
     }
 
+    private void preveriDovoljenjaZaObvestila() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        // Ob vrnitvi iz podrobnosti/urejanja osvežimo seznam,
-        // saj se je morda spremenil naslov, slika ali priljubljenost recepta.
         if (adapter != null) {
             adapter.osvezi();
         }
@@ -175,7 +198,6 @@ public class MainActivity extends AppCompatActivity {
         new ItemTouchHelper(callback).attachToRecyclerView(seznam);
     }
 
-    // ===== Dialog za napredno filtriranje (oznake, čas, kalorije) =====
     private void odpriFilterDialog() {
         View pogled = getLayoutInflater().inflate(R.layout.dialog_filter, null);
 
@@ -189,7 +211,6 @@ public class MainActivity extends AppCompatActivity {
         TextView oznakaCas = pogled.findViewById(R.id.oznakaCas);
         TextView oznakaKalorije = pogled.findViewById(R.id.oznakaKalorije);
 
-        // --- Zberi vse oznake in najvišje vrednosti iz obstoječih receptov ---
         java.util.TreeSet<String> vseOznake = new java.util.TreeSet<>();
         int najvecCas = 0;
         int najvecKalorij = 0;
@@ -198,11 +219,9 @@ public class MainActivity extends AppCompatActivity {
             najvecCas = Math.max(najvecCas, r.getSkupniCas());
             najvecKalorij = Math.max(najvecKalorij, r.kalorije);
         }
-        // Zaokroži navzgor in poskrbi za smiselne minimalne razpone
         final int casZgornja = Math.max(60, ((najvecCas / 30) + 1) * 30);
         final int kalorijeZgornja = Math.max(500, ((najvecKalorij / 100) + 1) * 100);
 
-        // --- Oznake kot izbirni chipi ---
         if (vseOznake.isEmpty()) {
             oznakePrazno.setVisibility(View.VISIBLE);
         }
@@ -216,7 +235,6 @@ public class MainActivity extends AppCompatActivity {
             chipi.addView(chip);
         }
 
-        // --- Slider: čas ---
         sliderCas.setValueFrom(0);
         sliderCas.setValueTo(casZgornja);
         int trenutniMaxCas = adapter.getMaxCas();
@@ -227,7 +245,6 @@ public class MainActivity extends AppCompatActivity {
         sliderCas.addOnChangeListener((s, value, fromUser) ->
                 oznakaCas.setText(formatirajCasFilter((int) value, casZgornja)));
 
-        // --- Slider: kalorije ---
         sliderKalorije.setValueFrom(0);
         sliderKalorije.setValueTo(kalorijeZgornja);
         int trenutniMaxKal = adapter.getMaxKalorije();
@@ -248,7 +265,6 @@ public class MainActivity extends AppCompatActivity {
                                 (com.google.android.material.chip.Chip) chipi.getChildAt(i);
                         if (c.isChecked()) izbrane.add(c.getText().toString());
                     }
-                    // Če je slider na vrhu, pomeni "brez omejitve"
                     int cas = (int) sliderCas.getValue();
                     int kal = (int) sliderKalorije.getValue();
                     int maxCas = (cas >= casZgornja) ? Integer.MAX_VALUE : cas;
@@ -301,11 +317,10 @@ public class MainActivity extends AppCompatActivity {
         private final List<Recept> prikazani;
         private final OnReceptClick poslusalec;
 
-        // ===== Stanje filtrov (vsa merila se uveljavijo skupaj) =====
         private String iskalniNiz = "";
         private boolean samoPriljubljeni = false;
         private final java.util.Set<String> izbraneOznake = new java.util.HashSet<>();
-        private int maxCas = Integer.MAX_VALUE;       // skupni čas (priprava + kuhanje)
+        private int maxCas = Integer.MAX_VALUE;
         private int maxKalorije = Integer.MAX_VALUE;
 
         ReceptAdapter(List<Recept> recepti, OnReceptClick poslusalec) {
@@ -319,7 +334,6 @@ public class MainActivity extends AppCompatActivity {
             uveljavi();
         }
 
-        // Ponovno uskladi prikazani seznam z glavnim in osveži celoten prikaz.
         public void osvezi() {
             uveljavi();
         }
@@ -333,7 +347,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // ===== Vmesniki za posamezna merila (vsak le nastavi svoj del) =====
         public void filtriraj(String poizvedba) {
             iskalniNiz = poizvedba == null ? "" : poizvedba.toLowerCase().trim();
             uveljavi();
@@ -352,19 +365,16 @@ public class MainActivity extends AppCompatActivity {
             uveljavi();
         }
 
-        // Trenutno aktivno stanje filtrov (za predizpolnitev dialoga)
         public java.util.Set<String> getIzbraneOznake() { return izbraneOznake; }
         public int getMaxCas() { return maxCas; }
         public int getMaxKalorije() { return maxKalorije; }
 
-        // Ali je kak filter sploh aktiven (za npr. obarvanje gumba)
         public boolean jeFilterAktiven() {
             return !izbraneOznake.isEmpty()
                     || maxCas != Integer.MAX_VALUE
                     || maxKalorije != Integer.MAX_VALUE;
         }
 
-        // ===== Osrednja filtrirna logika: vsa merila hkrati =====
         private void uveljavi() {
             prikazani.clear();
             for (Recept r : vsiRecepti) {
@@ -376,25 +386,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         private boolean ustreza(Recept r) {
-            // Iskalni niz (po naslovu)
             if (!iskalniNiz.isEmpty()) {
                 if (r.naslov == null || !r.naslov.toLowerCase().contains(iskalniNiz)) {
                     return false;
                 }
             }
-            // Samo priljubljeni
             if (samoPriljubljeni && !r.priljubljen) {
                 return false;
             }
-            // Največji skupni čas
             if (r.getSkupniCas() > maxCas) {
                 return false;
             }
-            // Največ kalorij
             if (r.kalorije > maxKalorije) {
                 return false;
             }
-            // Oznake: recept mora vsebovati VSE izbrane oznake
             if (!izbraneOznake.isEmpty()) {
                 if (r.oznake == null || !r.oznake.containsAll(izbraneOznake)) {
                     return false;

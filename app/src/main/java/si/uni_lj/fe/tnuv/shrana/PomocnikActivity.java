@@ -6,13 +6,13 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.Locale;
 import android.graphics.Color;
@@ -54,8 +54,8 @@ public class PomocnikActivity extends AppCompatActivity {
     private LinearLayout vsebnikPogovora;
     private TextView oblacekRazmisljanja;
     private EditText vnosSporocila;
+    private TextInputLayout vnosLayout;
     private Button gumbPoslji;
-    private ImageButton gumbMikrofon;
     private BottomNavigationView spodnjaNavigacija;
     private GenerativeModelFutures model;
     private Executor executor;
@@ -81,8 +81,8 @@ public class PomocnikActivity extends AppCompatActivity {
         drsnikPogovora = findViewById(R.id.drsnikPogovora);
         vsebnikPogovora = findViewById(R.id.vsebnikPogovora);
         vnosSporocila = findViewById(R.id.vnosSporocila);
+        vnosLayout = findViewById(R.id.vnosLayout);
         gumbPoslji = findViewById(R.id.gumbPoslji);
-        gumbMikrofon = findViewById(R.id.gumbMikrofon);
         spodnjaNavigacija = findViewById(R.id.spodnjaNavigacija);
 
         nastaviGemini();
@@ -100,7 +100,9 @@ public class PomocnikActivity extends AppCompatActivity {
     private void nastaviGumbe() {
         gumbPoslji.setOnClickListener(v -> posljiSporocilo());
 
-        gumbMikrofon.setOnClickListener(v -> zacniGovorniVnos());
+        if (vnosLayout != null) {
+            vnosLayout.setStartIconOnClickListener(v -> zacniGovorniVnos());
+        }
     }
 
     private void posljiSporocilo() {
@@ -159,12 +161,25 @@ public class PomocnikActivity extends AppCompatActivity {
         );
 
         GradientDrawable ozadje = new GradientDrawable();
-        ozadje.setCornerRadius(dp(18));
-
+        
         if (jeUporabnik) {
+            ozadje.setShape(GradientDrawable.RECTANGLE);
+            ozadje.setCornerRadii(new float[]{
+                    dp(18), dp(18), // top-left
+                    dp(18), dp(18), // top-right
+                    dp(18), dp(18), // bottom-left
+                    dp(4), dp(4)    // bottom-right
+            });
             ozadje.setColor(Color.parseColor("#6B8377"));
             oblacek.setTextColor(Color.WHITE);
         } else {
+            ozadje.setShape(GradientDrawable.RECTANGLE);
+            ozadje.setCornerRadii(new float[]{
+                    dp(4), dp(4),   // top-left
+                    dp(18), dp(18), // top-right
+                    dp(18), dp(18), // bottom-left
+                    dp(18), dp(18)  // bottom-right
+            });
             ozadje.setColor(Color.parseColor("#EEF4F1"));
             oblacek.setTextColor(Color.parseColor("#1F2A26"));
         }
@@ -230,7 +245,7 @@ public class PomocnikActivity extends AppCompatActivity {
         executor = ContextCompat.getMainExecutor(this);
 
         GenerativeModel ai = FirebaseAI.getInstance(GenerativeBackend.googleAI())
-                .generativeModel("gemini-2.5-flash");
+                .generativeModel("gemini-1.5-flash");
 
         model = GenerativeModelFutures.from(ai);
     }

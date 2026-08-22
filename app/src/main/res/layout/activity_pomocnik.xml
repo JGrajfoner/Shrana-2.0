@@ -1,26 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
-    android:background="@android:color/white">
+    android:background="@color/ozadje"
+    android:fitsSystemWindows="true">
 
-    <!-- Naslov strani, podobno kot na zavihku Časovniki -->
     <TextView
-        android:id="@+id/naslovPomocnik"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pomočnik"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="#1F2A26"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:paddingTop="32dp"
-        android:paddingBottom="16dp" />
+        style="@style/NaslovZaslona"
+        android:text="Pomočnik" />
 
     <!-- Pogovor s pomočnikom -->
     <ScrollView
@@ -28,64 +17,58 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fillViewport="true"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/vsebnikPogovora"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:clipToPadding="false" />
 
     </ScrollView>
 
-    <!-- Vnos sporočila + mikrofon + pošlji -->
+    <!-- Vnosna vrstica - poenoteno s Seznamom -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingStart="24dp"
+        android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:paddingTop="8dp"
         android:paddingBottom="12dp"
         android:gravity="center_vertical"
-        android:background="@android:color/white">
+        android:background="@color/ozadje">
 
-        <EditText
-            android:id="@+id/vnosSporocila"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/vnosLayout"
+            style="@style/Polje"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Vprašaj pomočnika ..."
-            android:textColor="#1F2A26"
-            android:textColorHint="#8E9995"
-            android:minHeight="48dp"
-            android:singleLine="false"
-            android:maxLines="3"
-            android:inputType="textMultiLine"
-            android:backgroundTint="#6B8377" />
+            app:hintEnabled="false"
+            app:startIconDrawable="@drawable/mic_24px"
+            app:startIconContentDescription="Govorni vnos">
 
-        <ImageButton
-            android:id="@+id/gumbMikrofon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/mic_24px"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="Govorni vnos" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/vnosSporocila"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Vprašaj pomočnika ..."
+                android:inputType="textMultiLine"
+                android:maxLines="4"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/gumbPoslji"
+            style="@style/Gumb.Tonalni"
             android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content"
             android:text="Pošlji"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:backgroundTint="#6B8377" />
+            android:layout_marginStart="8dp" />
 
     </LinearLayout>
 
