@@ -60,7 +60,7 @@ dependencies {
     // Firebase App Check - za varnost
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
 
-    // Ker uporabljamo Java kodo in ne Kotlin
+    // Ker uporabljamo Java kodo, in ne Kotlin
     implementation("com.google.guava:guava:31.0.1-android")
     implementation("org.reactivestreams:reactive-streams:1.0.4")
 }
