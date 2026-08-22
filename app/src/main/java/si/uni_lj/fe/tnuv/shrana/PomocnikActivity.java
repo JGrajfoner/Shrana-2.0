@@ -41,6 +41,9 @@ import com.google.firebase.ai.type.Content;
 import com.google.firebase.ai.type.GenerateContentResponse;
 import com.google.firebase.ai.type.GenerativeBackend;
 
+import com.google.firebase.appcheck.FirebaseAppCheck;
+import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory;
+
 import java.util.concurrent.Executor;
 
 public class PomocnikActivity extends AppCompatActivity {
@@ -69,6 +72,11 @@ public class PomocnikActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pomocnik);
+
+        // Inicijalizira Firebase App Check
+        FirebaseAppCheck.getInstance().installAppCheckProviderFactory(
+                PlayIntegrityAppCheckProviderFactory.getInstance()
+        );
 
         drsnikPogovora = findViewById(R.id.drsnikPogovora);
         vsebnikPogovora = findViewById(R.id.vsebnikPogovora);
