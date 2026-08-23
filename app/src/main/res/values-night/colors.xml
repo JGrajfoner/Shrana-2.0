@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Vodilna barva: v temnem načinu svetlejša in manj nasičena -->
+    <color name="primarna">#9CC0B0</color>
+    <color name="primarna_temna">#CDE3D9</color>
+    <color name="primarna_svetla">#33473F</color>
+    <color name="na_primarni">#12291F</color>
+
+    <color name="opozorilo">#E8A08F</color>
+    <color name="na_opozorilu">#4A1A11</color>
+
+    <color name="ozadje">#141615</color>
+    <color name="povrsina">#1C1F1D</color>
+    <color name="povrsina_varianta">#262A28</color>
+    <color name="besedilo_primarno">#E6E9E6</color>
+    <color name="besedilo_sekundarno">#AEB5B0</color>
+    <color name="locnica">#333836</color>
+    <color name="namig">#7C837E</color>
+
+    <color name="oblacek_uporabnik">#3E5B4F</color>
+    <color name="na_oblacku_uporabnik">#E8F0EB</color>
+    <color name="oblacek_pomocnik">#242927</color>
+    <color name="na_oblacku_pomocnik">#E1E6E2</color>
+</resources>

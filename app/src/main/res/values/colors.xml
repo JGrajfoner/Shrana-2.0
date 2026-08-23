@@ -18,4 +18,10 @@
     <color name="besedilo_sekundarno">#5E6660</color>
     <color name="locnica">#E4E1DB</color>
     <color name="namig">#9AA39D</color>
+
+    <!-- ===== Oblački v pomočniku ===== -->
+    <color name="oblacek_uporabnik">#6B8377</color>
+    <color name="na_oblacku_uporabnik">#FFFFFF</color>
+    <color name="oblacek_pomocnik">#EEF4F1</color>
+    <color name="na_oblacku_pomocnik">#1F2A26</color>
 </resources>
