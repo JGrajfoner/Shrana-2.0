@@ -19,11 +19,55 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp">
 
-        <CalendarView
-            android:id="@+id/koledar"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp" />
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageButton
+                    android:id="@+id/gumbPrejsnjiMesec"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:src="@drawable/arrow_back_24px"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Prejšnji mesec" />
+
+                <TextView
+                    android:id="@+id/mesecLeto"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Mesec"
+                    android:textColor="@color/besedilo_primarno"
+                    android:textStyle="bold"
+                    android:textSize="17sp" />
+
+                <ImageButton
+                    android:id="@+id/gumbNaslednjiMesec"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/arrow_back_24px"
+                    android:rotation="180"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Naslednji mesec" />
+
+            </LinearLayout>
+
+            <GridLayout
+                android:id="@+id/koledarMreza"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="7" />
+
+        </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
