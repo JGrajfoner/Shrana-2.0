@@ -245,7 +245,7 @@ public class PomocnikActivity extends AppCompatActivity {
         executor = ContextCompat.getMainExecutor(this);
 
         GenerativeModel ai = FirebaseAI.getInstance(GenerativeBackend.googleAI())
-                .generativeModel("gemini-1.5-flash");
+                .generativeModel("gemini-3.1-flash-lite");
 
         model = GenerativeModelFutures.from(ai);
     }
