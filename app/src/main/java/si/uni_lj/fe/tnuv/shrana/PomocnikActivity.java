@@ -170,8 +170,8 @@ public class PomocnikActivity extends AppCompatActivity {
                     dp(18), dp(18), // bottom-left
                     dp(4), dp(4)    // bottom-right
             });
-            ozadje.setColor(Color.parseColor("#6B8377"));
-            oblacek.setTextColor(Color.WHITE);
+            ozadje.setColor(ContextCompat.getColor(this, R.color.oblacek_uporabnik));
+            oblacek.setTextColor(ContextCompat.getColor(this, R.color.na_oblacku_uporabnik));
         } else {
             ozadje.setShape(GradientDrawable.RECTANGLE);
             ozadje.setCornerRadii(new float[]{
@@ -180,8 +180,8 @@ public class PomocnikActivity extends AppCompatActivity {
                     dp(18), dp(18), // bottom-left
                     dp(18), dp(18)  // bottom-right
             });
-            ozadje.setColor(Color.parseColor("#EEF4F1"));
-            oblacek.setTextColor(Color.parseColor("#1F2A26"));
+            ozadje.setColor(ContextCompat.getColor(this, R.color.oblacek_pomocnik));
+            oblacek.setTextColor(ContextCompat.getColor(this, R.color.na_oblacku_pomocnik));
         }
 
         oblacek.setBackground(ozadje);
