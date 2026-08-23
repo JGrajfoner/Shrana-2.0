@@ -17,6 +17,7 @@ import android.widget.Toast;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -28,6 +29,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -188,13 +190,33 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                int pozicija = viewHolder.getAdapterPosition();
-                adapter.odstrani(pozicija);
-                RepozitorijReceptov.shrani(MainActivity.this);
+            public void onSwiped(@NonNull RecyclerView.ViewHolder vh, int direction) {
+                int pozicija = vh.getBindingAdapterPosition();
+                if (pozicija == RecyclerView.NO_POSITION) return;
+
+                Recept recept = adapter.naPoziciji(pozicija);
+                if (recept == null) {
+                    adapter.notifyItemChanged(pozicija);
+                    return;
+                }
+
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Izbriši recept?")
+                        .setMessage("Recept \"" + recept.naslov
+                                + "\" bo trajno izbrisan. Tega dejanja ni mogoče razveljaviti.")
+                        .setPositiveButton("Izbriši", (dialog, kateri) -> {
+                            adapter.odstrani(pozicija);
+                            RepozitorijReceptov.shrani(MainActivity.this);
+                        })
+                        // Preklic: vrstico vrnemo na svoje mesto
+                        .setNegativeButton("Prekliči", (dialog, kateri) ->
+                                adapter.notifyItemChanged(pozicija))
+                        // Isto velja ob tipki nazaj ali kliku izven pogovornega okna
+                        .setOnCancelListener(dialog ->
+                                adapter.notifyItemChanged(pozicija))
+                        .show();
             }
         };
-
         new ItemTouchHelper(callback).attachToRecyclerView(seznam);
     }
 
@@ -345,6 +367,13 @@ public class MainActivity extends AppCompatActivity {
                 prikazani.remove(pozicija);
                 notifyItemRemoved(pozicija);
             }
+        }
+
+        public Recept naPoziciji(int pozicija) {
+            if (pozicija >= 0 && pozicija < prikazani.size()) {
+                return prikazani.get(pozicija);
+            }
+            return null;
         }
 
         public void filtriraj(String poizvedba) {
