@@ -244,8 +244,9 @@ public class PomocnikActivity extends AppCompatActivity {
     private void nastaviGemini() {
         executor = ContextCompat.getMainExecutor(this);
 
+        // Posodobljeno na Gemini 2.0 Flash, ki je novejši in stabilnejši
         GenerativeModel ai = FirebaseAI.getInstance(GenerativeBackend.googleAI())
-                .generativeModel("gemini-1.5-flash");
+                .generativeModel("gemini-3.1-flash-lite");
 
         model = GenerativeModelFutures.from(ai);
     }
