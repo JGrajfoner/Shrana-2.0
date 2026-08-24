@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/Kartica"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -27,7 +28,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="00:00:00"
+                tools:text="00:00:00"
                 android:textSize="32sp"
                 android:textStyle="bold"
                 android:textColor="@color/besedilo_primarno" />
@@ -40,7 +41,7 @@
                 android:src="@android:drawable/ic_media_pause"
                 app:tint="@color/primarna"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Pavza" />
+                android:contentDescription="@string/opis_pavza" />
 
             <!-- Odstrani -->
             <ImageButton
@@ -50,7 +51,7 @@
                 android:src="@android:drawable/ic_menu_close_clear_cancel"
                 app:tint="@color/opozorilo"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Odstrani" />
+                android:contentDescription="@string/opis_odstrani" />
         </LinearLayout>
 
         <!-- Opis časovnika -->
@@ -58,7 +59,7 @@
             android:id="@+id/opisCasovnika"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="opis"
+            tools:text="opis"
             android:textSize="16sp"
             android:textColor="@color/besedilo_sekundarno" />
 

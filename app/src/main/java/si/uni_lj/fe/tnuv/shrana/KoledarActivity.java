@@ -29,7 +29,7 @@ import java.util.Locale;
 public class KoledarActivity extends AppCompatActivity {
 
     // Trije obroki, ki se pokažejo za vsak dan
-    private final String[] OBROKI = {"Zajtrk", "Kosilo", "Večerja"};
+    private String[] OBROKI;
 
     // Shramba načrtovanih obrokov. Ključ = "datum|obrok", vrednost = ime recepta.
     private Map<String, String> nacrt = new HashMap<>();
@@ -55,6 +55,8 @@ public class KoledarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_koledar);
+
+        OBROKI = getResources().getStringArray(R.array.obroki);
 
         naloziNacrt();
 
@@ -97,7 +99,7 @@ public class KoledarActivity extends AppCompatActivity {
         }
         mesecLeto.setText(naslov);
 
-        String[] dnevi = {"Pon", "Tor", "Sre", "Čet", "Pet", "Sob", "Ned"};
+        String[] dnevi = getResources().getStringArray(R.array.kratice_dni);
 
         for (String dan : dnevi) {
             TextView oznaka = new TextView(this);

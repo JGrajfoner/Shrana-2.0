@@ -1,3 +1,94 @@
 <resources>
     <string name="app_name">Shrana</string>
+    <string name="naslov_casovniki">Časovniki</string>
+    <string name="casovniki_prazno">Dodajte časovnik s klikom na + Dodaj</string>
+    <string name="gumb_dodaj_plus">+ Dodaj</string>
+
+    <string name="naslov_dodaj_recept">Dodaj nov recept</string>
+    <string name="razdelek_naslov">NASLOV</string>
+    <string name="namig_naslov_recepta">Naslov recepta</string>
+    <string name="razdelek_slika">SLIKA</string>
+    <string name="opis_predogled_slike">Predogled slike</string>
+    <string name="gumb_izberi_sliko">Izberi sliko</string>
+    <string name="razdelek_cas_priprave">ČAS PRIPRAVE</string>
+    <string name="cas_nic_min">0 min</string>
+    <string name="razdelek_cas_kuhanja">ČAS KUHANJA</string>
+    <string name="razdelek_kalorije">KALORIJE</string>
+    <string name="namig_kcal">kcal</string>
+    <string name="razdelek_opis">OPIS</string>
+    <string name="namig_kratek_opis_recepta">Kratek opis recepta</string>
+    <string name="razdelek_sestavine">SESTAVINE</string>
+    <string name="namig_ime_sestavine">Ime</string>
+    <string name="namig_kolicina">Kol.</string>
+    <string name="plus">+</string>
+    <string name="filter_oznake">OZNAKE</string>
+    <string name="namig_oznaka">Vnesi oznako</string>
+
+    <string name="razdelek_priprava">PRIPRAVA</string>
+    <string name="namig_priprava">Opišite postopek priprave …</string>
+    <string name="preklici">Prekliči</string>
+    <string name="shrani">Shrani</string>
+
+    <string name="naslov_koledar">Koledar</string>
+    <string name="opis_prejsnji_mesec">Prejšnji mesec</string>
+    <string name="opis_naslednji_mesec">Naslednji mesec</string>
+    <string name="koledar_izberi_dan">Izberi dan v koledarju</string>
+
+    <string name="namig_isci">Išči …</string>
+    <string name="opis_filter">Filter</string>
+    <string name="naslov_recepti">Recepti</string>
+    <string name="opis_priljubljeni">Priljubljeni</string>
+
+    <string name="opis_slika_recepta">Slika recepta</string>
+    <string name="opis_priljubljeno">Priljubljeno</string>
+
+    <string name="opis_dodaj_obrok">Dodaj obrok</string>
+    <string name="opis_pavza">Pavza</string>
+    <string name="opis_odstrani">Odstrani</string>
+    <string name="opis_nazaj">Nazaj</string>
+    <string name="opis_uredi">Uredi</string>
+    <string name="gumb_na_seznam">na seznam</string>
+
+    <string name="naslov_pomocnik">Pomočnik</string>
+    <string name="namig_vprasaj_pomocnika">Vprašaj pomočnika …</string>
+    <string name="gumb_poslji">Pošlji</string>
+    <string name="namig_ure">uu</string>
+    <string name="namig_minute">mm</string>
+    <string name="namig_sekunde">ss</string>
+    <string name="namig_opis_casovnika">Opis (npr. Krompir)</string>
+    <string name="dvopicje">:</string>
+
+    <string name="naslov_seznam">Nakupovalni seznam</string>
+    <string name="namig_dodaj_postavko">Dodaj postavko …</string>
+    <string name="gumb_pocisti_odkljukane">Počisti odkljukane</string>
+    <string name="nav_koledar">Koledar</string>
+    <string name="nav_seznam">Seznam</string>
+    <string name="nav_recepti">Recepti</string>
+    <string name="nav_casovnik">Časovnik</string>
+    <string name="nav_pomocnik">Pomočnik</string>
+    <string name="filter_ni_oznak">Ni oznak</string>
+    <string name="filter_najvec_casa">NAJVEČ ČASA</string>
+    <string name="filter_najvec_kalorij">NAJVEČ KALORIJ</string>
+    <string name="opis_odstrani_recept">Odstrani recept</string>
+    <string name="opis_dodaj_recept">Dodaj recept</string>
+    <string name="naslov_uredi_recept">Uredi recept</string>
+    <string name="posodobi">Posodobi</string>
+    <string name="razdelek_oznake">OZNAKE</string>
+
+    <string-array name="obroki">
+        <item>Zajtrk</item>
+        <item>Kosilo</item>
+        <item>Večerja</item>
+    </string-array>
+
+    <string-array name="kratice_dni">
+        <item>Pon</item>
+        <item>Tor</item>
+        <item>Sre</item>
+        <item>Čet</item>
+        <item>Pet</item>
+        <item>Sob</item>
+        <item>Ned</item>
+    </string-array>
+
 </resources>

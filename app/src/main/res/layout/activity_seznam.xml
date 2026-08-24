@@ -9,7 +9,7 @@
 
     <TextView
         style="@style/NaslovZaslona"
-        android:text="Nakupovalni seznam" />
+        android:text="@string/naslov_seznam" />
 
     <!-- Vrstica za ročno dodajanje -->
     <LinearLayout
@@ -31,7 +31,7 @@
                 android:id="@+id/vnosPostavka"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Dodaj postavko ..."
+                android:hint="@string/namig_dodaj_postavko"
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -41,7 +41,7 @@
             style="@style/Gumb.Tonalni"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+"
+            android:text="@string/plus"
             android:layout_marginStart="8dp" />
     </LinearLayout>
 
@@ -62,7 +62,7 @@
         android:layout_gravity="end"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="4dp"
-        android:text="Počisti odkljukane" />
+        android:text="@string/gumb_pocisti_odkljukane" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/spodnjaNavigacija"

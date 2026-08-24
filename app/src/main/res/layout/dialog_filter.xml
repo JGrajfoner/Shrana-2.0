@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/ozadje">
@@ -14,13 +15,13 @@
         <!-- ===== Oznake ===== -->
         <TextView
             style="@style/NaslovRazdelka"
-            android:text="OZNAKE" />
+            android:text="@string/filter_oznake" />
 
         <TextView
             android:id="@+id/oznakePrazno"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ni oznak"
+            android:text="@string/filter_ni_oznak"
             android:textColor="@color/namig"
             android:textSize="14sp"
             android:visibility="gone" />
@@ -43,13 +44,13 @@
                 style="@style/NaslovRazdelka"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="NAJVEČ ČASA" />
+                android:text="@string/filter_najvec_casa" />
 
             <TextView
                 android:id="@+id/oznakaCas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="–"
+                tools:text="–"
                 android:textColor="@color/primarna"
                 android:textStyle="bold"
                 android:textSize="14sp" />
@@ -76,13 +77,13 @@
                 style="@style/NaslovRazdelka"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="NAJVEČ KALORIJ" />
+                android:text="@string/filter_najvec_kalorij" />
 
             <TextView
                 android:id="@+id/oznakaKalorije"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="–"
+                tools:text="–"
                 android:textColor="@color/primarna"
                 android:textStyle="bold"
                 android:textSize="14sp" />

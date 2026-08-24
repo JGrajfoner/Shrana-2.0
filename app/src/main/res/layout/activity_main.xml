@@ -9,7 +9,7 @@
 
     <TextView
         style="@style/NaslovZaslona"
-        android:text="Recepti" />
+        android:text="@string/naslov_recepti" />
 
     <!-- Zgornja vrstica: iskanje + filter + priljubljeni -->
     <LinearLayout
@@ -34,7 +34,7 @@
                 android:id="@+id/iskalnik"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Išči ..."
+                android:hint="@string/namig_isci"
                 android:inputType="text"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp" />
@@ -49,7 +49,7 @@
             android:src="@drawable/ic_filter"
             app:tint="@color/besedilo_sekundarno"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Filter" />
+            android:contentDescription="@string/opis_filter" />
 
         <ImageButton
             android:id="@+id/gumbPriljubljeni"
@@ -58,7 +58,7 @@
             android:src="@drawable/ic_star_outline"
             app:tint="@color/primarna"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Priljubljeni" />
+            android:contentDescription="@string/opis_priljubljeni" />
     </LinearLayout>
 
     <!-- FrameLayout dovoli, da gumb "lebdi" nad seznamom (desno spodaj) -->
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            android:text="+ Dodaj"
+            android:text="@string/gumb_dodaj_plus"
             android:textColor="@color/na_primarni"
             app:backgroundTint="@color/primarna" />
 

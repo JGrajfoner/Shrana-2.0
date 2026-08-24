@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_image"
                 android:scaleType="centerCrop"
-                android:contentDescription="Slika recepta" />
+                android:contentDescription="@string/opis_slika_recepta" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -99,7 +99,7 @@
             android:layout_height="40dp"
             android:src="@drawable/ic_star_outline"
             app:tint="@color/primarna"
-            android:contentDescription="Priljubljeno"
+            android:contentDescription="@string/opis_priljubljeno"
             android:padding="8dp"
             android:background="?attr/selectableItemBackgroundBorderless" />
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -13,7 +14,7 @@
         android:id="@+id/imeObroka"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Zajtrk"
+        tools:text="Zajtrk"
         android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="@color/besedilo_primarno" />
@@ -24,7 +25,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="-"
+        tools:text="-"
         android:textSize="16sp"
         android:textColor="@color/besedilo_sekundarno" />
 
@@ -36,7 +37,7 @@
         android:src="@android:drawable/ic_menu_close_clear_cancel"
         app:tint="@color/opozorilo"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Odstrani recept" />
+        android:contentDescription="@string/opis_odstrani_recept" />
 
     <!-- Gumb + (viden, če obrok še ni določen) -->
     <ImageButton
@@ -46,6 +47,6 @@
         android:src="@drawable/add_24px"
         app:tint="@color/primarna"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Dodaj recept" />
+        android:contentDescription="@string/opis_dodaj_recept" />
 
 </LinearLayout>

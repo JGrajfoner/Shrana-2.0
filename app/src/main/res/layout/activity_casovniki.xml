@@ -9,7 +9,7 @@
 
     <TextView
         style="@style/NaslovZaslona"
-        android:text="Časovniki" />
+        android:text="@string/naslov_casovniki" />
 
     <!-- FrameLayout: seznam in prazno navodilo se prekrivata -->
     <FrameLayout
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Dodajte časovnik s klikom na + Dodaj"
+            android:text="@string/casovniki_prazno"
             android:textSize="16sp"
             android:textColor="@color/namig"
             android:gravity="center"
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_margin="16dp"
-        android:text="+ Dodaj"
+        android:text="@string/gumb_dodaj_plus"
         android:textColor="@color/na_primarni"
         app:backgroundTint="@color/primarna" />
 

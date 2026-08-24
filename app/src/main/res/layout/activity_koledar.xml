@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,7 +10,7 @@
 
     <TextView
         style="@style/NaslovZaslona"
-        android:text="Koledar" />
+        android:text="@string/naslov_koledar" />
 
     <com.google.android.material.card.MaterialCardView
         style="@style/Kartica"
@@ -37,7 +38,7 @@
                     android:layout_height="44dp"
                     android:src="@drawable/arrow_back_24px"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="Prejšnji mesec" />
+                    android:contentDescription="@string/opis_prejsnji_mesec" />
 
                 <TextView
                     android:id="@+id/mesecLeto"
@@ -45,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Mesec"
+                    tools:text="Mesec"
                     android:textColor="@color/besedilo_primarno"
                     android:textStyle="bold"
                     android:textSize="17sp" />
@@ -57,7 +58,7 @@
                     android:src="@drawable/arrow_back_24px"
                     android:rotation="180"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="Naslednji mesec" />
+                    android:contentDescription="@string/opis_naslednji_mesec" />
 
             </LinearLayout>
 
@@ -75,7 +76,7 @@
         android:id="@+id/izbraniDatum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Izberi dan v koledarju"
+        android:text="@string/koledar_izberi_dan"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/besedilo_primarno"

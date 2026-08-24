@@ -25,7 +25,7 @@
                 android:src="@drawable/arrow_back_24px"
                 app:tint="@color/besedilo_primarno"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Nazaj"
+                android:contentDescription="@string/opis_nazaj"
                 android:layout_alignParentStart="true" />
 
             <ImageButton
@@ -35,7 +35,7 @@
                 android:src="@drawable/edit_24px"
                 app:tint="@color/primarna"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Uredi"
+                android:contentDescription="@string/opis_uredi"
                 android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
@@ -51,7 +51,7 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_image"
                 android:scaleType="centerCrop"
-                android:contentDescription="Slika recepta" />
+                android:contentDescription="@string/opis_slika_recepta" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -138,7 +138,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="SESTAVINE"
+                android:text="@string/razdelek_sestavine"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/besedilo_primarno" />
@@ -148,7 +148,7 @@
                 style="@style/Gumb.Tekstovni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="na seznam"
+                android:text="@string/gumb_na_seznam"
                 app:icon="@drawable/add_shopping_cart_24px" />
         </LinearLayout>
 
@@ -156,7 +156,7 @@
             android:id="@+id/sestavine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="-"
+            tools:text="-"
             android:textSize="16sp"
             android:lineSpacingExtra="4dp"
             android:layout_marginTop="8dp"
@@ -170,7 +170,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PRIPRAVA"
+            android:text="@string/razdelek_sestavine"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/besedilo_primarno" />
@@ -179,7 +179,7 @@
             android:id="@+id/priprava"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="-"
+            tools:text="-"
             android:textSize="16sp"
             android:lineSpacingExtra="4dp"
             android:layout_marginTop="8dp"

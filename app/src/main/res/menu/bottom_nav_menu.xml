@@ -3,21 +3,21 @@
     <item
         android:id="@+id/nav_koledar"
         android:icon="@android:drawable/ic_menu_my_calendar"
-        android:title="Koledar" />
+        android:title="@string/nav_koledar" />
     <item
         android:id="@+id/nav_seznam"
         android:icon="@android:drawable/ic_menu_agenda"
-        android:title="Seznam" />
+        android:title="@string/nav_seznam" />
     <item
         android:id="@+id/nav_recepti"
         android:icon="@android:drawable/ic_menu_sort_by_size"
-        android:title="Recepti" />
+        android:title="@string/nav_recepti" />
     <item
         android:id="@+id/nav_casovnik"
         android:icon="@android:drawable/ic_menu_recent_history"
-        android:title="Časovnik" />
+        android:title="@string/nav_casovnik" />
     <item
         android:id="@+id/nav_pomocnik"
         android:icon="@android:drawable/ic_menu_help"
-        android:title="Pomočnik" />
+        android:title="@string/nav_pomocnik" />
 </menu>

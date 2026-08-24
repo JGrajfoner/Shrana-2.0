@@ -9,7 +9,7 @@
 
     <TextView
         style="@style/NaslovZaslona"
-        android:text="Pomočnik" />
+        android:text="@string/naslov_pomocnik" />
 
     <!-- Pogovor s pomočnikom -->
     <ScrollView
@@ -54,7 +54,7 @@
                 android:id="@+id/vnosSporocila"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Vprašaj pomočnika ..."
+                android:hint="@string/namig_vprasaj_pomocnika"
                 android:inputType="textMultiLine"
                 android:maxLines="4"
                 android:paddingTop="12dp"
@@ -67,7 +67,7 @@
             style="@style/Gumb.Tonalni"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pošlji"
+            android:text="@string/gumb_poslji"
             android:layout_marginStart="8dp" />
 
     </LinearLayout>

@@ -16,14 +16,14 @@
             android:id="@+id/vnosUre"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:hint="uu"
+            android:hint="@string/namig_ure"
             android:inputType="number"
             android:gravity="center" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=":"
+            android:text="@string/dvopicje"
             android:textColor="@color/besedilo_primarno"
             android:textSize="24sp" />
 
@@ -31,14 +31,14 @@
             android:id="@+id/vnosMinute"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:hint="mm"
+            android:hint="@string/namig_minute"
             android:inputType="number"
             android:gravity="center" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=":"
+            android:text="@string/dvopicje"
             android:textColor="@color/besedilo_primarno"
             android:textSize="24sp" />
 
@@ -46,7 +46,7 @@
             android:id="@+id/vnosSekunde"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:hint="ss"
+            android:hint="@string/namig_sekunde"
             android:inputType="number"
             android:gravity="center" />
     </LinearLayout>
@@ -55,7 +55,7 @@
         android:id="@+id/vnosOpis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Opis (npr. Krompir)"
+        android:hint="@string/namig_opis_casovnika"
         android:layout_marginTop="16dp" />
 
 </LinearLayout>

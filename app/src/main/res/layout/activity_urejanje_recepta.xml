@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ozadje"
@@ -15,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Uredi recept"
+            android:text="@string/naslov_uredi_recept"
             android:textSize="26sp"
             android:textStyle="bold"
             android:textColor="@color/besedilo_primarno"
@@ -23,7 +24,7 @@
 
         <TextView
             style="@style/NaslovRazdelka"
-            android:text="NASLOV" />
+            android:text="@string/razdelek_naslov" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Polje"
@@ -34,13 +35,13 @@
                 android:id="@+id/vnosNaslov"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Naslov recepta"
+                android:hint="@string/namig_naslov_recepta"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             style="@style/NaslovRazdelka"
-            android:text="SLIKA" />
+            android:text="@string/razdelek_slika" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,7 +62,7 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_image"
-                    android:contentDescription="Predogled slike" />
+                    android:contentDescription="@string/opis_predogled_slike" />
             </com.google.android.material.card.MaterialCardView>
 
             <Button
@@ -70,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Izberi sliko" />
+                android:text="@string/gumb_izberi_sliko" />
         </LinearLayout>
 
         <LinearLayout
@@ -87,14 +88,14 @@
 
                 <TextView
                     style="@style/NaslovRazdelka"
-                    android:text="ČAS PRIPRAVE" />
+                    android:text="@string/razdelek_cas_priprave" />
 
                 <Button
                     android:id="@+id/gumbCasPriprave"
                     style="@style/Gumb.Tonalni"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="0 min" />
+                    tools:text="0 min" />
             </LinearLayout>
 
             <LinearLayout
@@ -106,20 +107,20 @@
 
                 <TextView
                     style="@style/NaslovRazdelka"
-                    android:text="ČAS KUHANJA" />
+                    android:text="@string/razdelek_cas_kuhanja" />
 
                 <Button
                     android:id="@+id/gumbCasKuhanja"
                     style="@style/Gumb.Tonalni"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="0 min" />
+                    tools:text="0 min" />
             </LinearLayout>
         </LinearLayout>
 
         <TextView
             style="@style/NaslovRazdelka"
-            android:text="KALORIJE" />
+            android:text="@string/razdelek_kalorije" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Polje"
@@ -130,13 +131,13 @@
                 android:id="@+id/vnosKalorije"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="kcal"
+                android:hint="@string/namig_kcal"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             style="@style/NaslovRazdelka"
-            android:text="OPIS" />
+            android:text="@string/razdelek_opis" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Polje"
@@ -147,7 +148,7 @@
                 android:id="@+id/vnosOpis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Kratek opis recepta"
+                android:hint="@string/namig_kratek_opis_recepta"
                 android:inputType="textMultiLine"
                 android:minLines="2"
                 android:gravity="top" />
@@ -155,7 +156,7 @@
 
         <TextView
             style="@style/NaslovRazdelka"
-            android:text="SESTAVINE" />
+            android:text="@string/razdelek_sestavine" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -173,7 +174,7 @@
                     android:id="@+id/vnosImeSestavine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Ime"
+                    android:hint="@string/namig_ime_sestavine"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -188,7 +189,7 @@
                     android:id="@+id/vnosKolicinaSestavine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Kol."
+                    android:hint="@string/namig_kolicina"
                     android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -216,7 +217,7 @@
                 style="@style/Gumb.Tonalni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+"
+                android:text="@string/plus"
                 android:layout_marginStart="4dp" />
         </LinearLayout>
 
@@ -229,7 +230,7 @@
 
         <TextView
             style="@style/NaslovRazdelka"
-            android:text="OZNAKE" />
+            android:text="@string/razdelek_oznake" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -248,7 +249,7 @@
                     android:id="@+id/vnosOznaka"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Vnesi oznako"
+                    android:hint="@string/namig_oznaka"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -257,7 +258,7 @@
                 style="@style/Gumb.Tonalni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+"
+                android:text="@string/plus"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
 
@@ -269,7 +270,7 @@
 
         <TextView
             style="@style/NaslovRazdelka"
-            android:text="PRIPRAVA" />
+            android:text="@string/razdelek_priprava" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Polje"
@@ -280,7 +281,7 @@
                 android:id="@+id/vnosPriprava"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Opišite postopek priprave..."
+                android:hint="@string/namig_priprava"
                 android:inputType="textMultiLine"
                 android:minLines="5"
                 android:gravity="top" />
@@ -298,7 +299,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
-                android:text="Prekliči" />
+                android:text="@string/preklici" />
 
             <Button
                 android:id="@+id/gumbPosodobi"
@@ -307,7 +308,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="8dp"
-                android:text="Posodobi" />
+                android:text="@string/posodobi" />
         </LinearLayout>
 
     </LinearLayout>
