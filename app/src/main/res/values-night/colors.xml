@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Vodilna barva: v temnem načinu svetlejša in manj nasičena -->
+    <!-- Primarna barva: svetlejša zelena, manj saturacije -->
     <color name="primarna">#9CC0B0</color>
     <color name="primarna_temna">#CDE3D9</color>
     <color name="primarna_svetla">#33473F</color>

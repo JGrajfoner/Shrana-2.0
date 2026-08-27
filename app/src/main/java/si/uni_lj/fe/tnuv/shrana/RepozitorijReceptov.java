@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-// Skupna shramba receptov + trajno shranjevanje preko JsonShramba.
+// skupna shramba receptov + trajno shranjevanje preko JsonShramba.
 public class RepozitorijReceptov {
 
     private static final String IME_DATOTEKE = "shramba_receptov";
@@ -22,7 +22,7 @@ public class RepozitorijReceptov {
         return recepti;
     }
 
-    // Prebere recepte z diska v seznam. Pokličemo ob zagonu.
+    // prebere recepte z diska v seznam, kliče se ob zagonu.
     public static void nalozi(Context context) {
         if (nalozeno) return; // dovolj je enkrat
 
@@ -36,7 +36,7 @@ public class RepozitorijReceptov {
         nalozeno = true;
     }
 
-    // Zapiše trenutni seznam na disk kot JSON. Pokličemo po vsaki spremembi.
+    // zapiše trenutni seznam na disk kot JSON, kliče se po vsaki spremembi.
     public static void shrani(Context context) {
         JsonShramba.shrani(context, IME_DATOTEKE, KLJUC, recepti);
     }

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -35,7 +34,7 @@ public class CasovnikiActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_casovniki);
 
-        // Funkcionalnost za gumb nazaj: vedno vrni na Recepti (MainActivity)
+        // gumb nazaj, vedno vrni na Recepti (MainActivity)
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -46,7 +45,7 @@ public class CasovnikiActivity extends AppCompatActivity
             }
         });
 
-        // Inicializira obvestila
+        // inicializirnje obvestila
         RepozitorijCasovnikov.inicializirajObvestila(this);
 
         casovniki = RepozitorijCasovnikov.getCasovniki();
@@ -60,7 +59,7 @@ public class CasovnikiActivity extends AppCompatActivity
 
         nastaviNavigacijo();
         
-        // Preveri ali je treba prikazati obvestilo iz notifikacije
+        // preveri ali je treba prikazati obvestilo iz Intent-a
         handleNotificationIntent(getIntent());
     }
     
@@ -76,14 +75,13 @@ public class CasovnikiActivity extends AppCompatActivity
             if (opisCasovnika != null) {
                 prikaziObvestilo(opisCasovnika);
             }
-            // Prekliči obvestilo v vrstici stanja
             if (RepozitorijCasovnikov.notificationManager != null) {
                 RepozitorijCasovnikov.notificationManager.cancel(RepozitorijCasovnikov.NOTIFICATION_ID);
             }
         }
     }
 
-    // Ko je zaslon viden, se naročimo na posodobitve in osvežimo prikaz
+    // ko je zaslon viden, se naročimo na posodobitve in osvežimo prikaz
     @Override
     protected void onResume() {
         super.onResume();
@@ -93,7 +91,7 @@ public class CasovnikiActivity extends AppCompatActivity
         posodobiPraznoStanje();
     }
 
-    // Ko zaslon ni več viden, se odjavimo (a časovniki tečejo naprej v repozitoriju)
+    // ko zaslon ni več viden, se odjavimo (časovniki tečejo naprej v repozitoriju)
     @Override
     protected void onPause() {
         super.onPause();
@@ -101,7 +99,6 @@ public class CasovnikiActivity extends AppCompatActivity
         RepozitorijCasovnikov.nastaviCasovnikiVOspredju(false, null);
     }
 
-    // Pokaže navodilo, če ni časovnikov; sicer ga skrije
     private void posodobiPraznoStanje() {
         View navodilo = findViewById(R.id.praznoNavodilo);
         if (casovniki.isEmpty()) {
@@ -111,7 +108,6 @@ public class CasovnikiActivity extends AppCompatActivity
         }
     }
 
-    // Repozitorij nas kliče ob vsakem tiku; osvežimo cel seznam
     @Override
     public void osveziPrikaz() {
         runOnUiThread(() -> {
@@ -141,6 +137,7 @@ public class CasovnikiActivity extends AppCompatActivity
     private void vprasajZaOpisInDodaj(long milis) {
         final EditText vnosOpis = new EditText(this);
         vnosOpis.setHint("Opis (npr. Krompir)");
+
         vnosOpis.setSingleLine(true);
 
         int rob = (int) (24 * getResources().getDisplayMetrics().density);
@@ -198,7 +195,7 @@ public class CasovnikiActivity extends AppCompatActivity
     @Override
     public void prikaziObvestilo(String opisCasovnika) {
         new AlertDialog.Builder(this)
-                .setTitle("⏰ Časovnik je potekel!")
+                .setTitle("Časovnik je potekel!")
                 .setMessage("Časovnik: " + opisCasovnika)
                 .setPositiveButton("Prekini", (dialog, which) -> {
                     RepozitorijCasovnikov.prekiniAlarm();

@@ -2,7 +2,6 @@ package si.uni_lj.fe.tnuv.shrana;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
@@ -40,7 +39,7 @@ public class DodajReceptActivity extends AppCompatActivity {
                     ImageView preview = findViewById(R.id.slikaPredogled);
                     preview.setImageURI(uri);
                     
-                    // Pridobimo trajno dovoljenje za dostop do URI-ja, če je mogoče
+                    // pridobimo trajno dovoljenje za dostop do URI-ja, če je mogoče
                     try {
                         getContentResolver().takePersistableUriPermission(uri,
                                 Intent.FLAG_GRANT_READ_URI_PERMISSION);

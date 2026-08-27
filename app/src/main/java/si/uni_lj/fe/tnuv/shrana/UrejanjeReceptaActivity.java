@@ -4,8 +4,6 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -65,8 +63,8 @@ public class UrejanjeReceptaActivity extends AppCompatActivity {
         EditText vnosOpis = findViewById(R.id.vnosOpis);
         EditText vnosPriprava = findViewById(R.id.vnosPriprava);
         ImageView slikaPredogled = findViewById(R.id.slikaPredogled);
-        
-        // Predizpolnjevanje
+
+        // predizpolnjevanje
         vnosNaslov.setText(originalniRecept.naslov);
         casPripraveMin = originalniRecept.casPriprave;
         casKuhanjaMin = originalniRecept.casKuhanja;
@@ -88,7 +86,7 @@ public class UrejanjeReceptaActivity extends AppCompatActivity {
         Button gumbDodajSestavino = findViewById(R.id.gumbDodajSestavino);
         LinearLayout kontejnerSestavin = findViewById(R.id.seznamSestavinKontejner);
 
-        // Naloži obstoječe sestavine
+        // naloži obstoječe sestavine
         if (originalniRecept.sestavine != null) {
             for (Recept.Sestavina s : originalniRecept.sestavine) {
                 seznamSestavin.add(s);

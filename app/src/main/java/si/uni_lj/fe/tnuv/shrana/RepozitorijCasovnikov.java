@@ -63,7 +63,6 @@ public class RepozitorijCasovnikov {
     }
 
     public static void nastaviCasovnikiVOspredju(boolean ospredje, CasovnikiObvestilo p) {
-        // Ta metoda se zdaj uporablja predvsem za specifično obnašanje CasovnikiActivity
         obvestiloPoslusalec = p;
     }
 
@@ -72,7 +71,7 @@ public class RepozitorijCasovnikov {
             appContext = context.getApplicationContext();
             ustvariNotificationChannel();
             
-            // Registracija sledenja dejavnostim za celotno aplikacijo
+            // registracija sledenja dejavnostim za celotno aplikacijo
             if (context.getApplicationContext() instanceof Application) {
                 ((Application) context.getApplicationContext()).registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
                     @Override public void onActivityResumed(@NonNull Activity activity) { aktivnaAktivnost = activity; }
@@ -137,11 +136,11 @@ public class RepozitorijCasovnikov {
     private static void sproziAlarm(String opis) {
         predvajajZvok();
 
-        // Če je katera koli dejavnost v ospredju, prikažemo dialog neposredno v njej
+        // če je katera koli dejavnost v ospredju, prikažeš dialog neposredno v njej
         if (aktivnaAktivnost != null) {
             prikaziDialogVTopAktivnosti(opis);
         } else {
-            // Le če je aplikacija v ozadju, pošljemo notifikacijo
+            // pošljemo obvestilo le če je aplikacija v ozadju
             prikaziNotification(opis);
         }
     }
@@ -151,7 +150,7 @@ public class RepozitorijCasovnikov {
         
         aktivnaAktivnost.runOnUiThread(() -> {
             new AlertDialog.Builder(aktivnaAktivnost)
-                    .setTitle("⏰ Časovnik je potekel!")
+                    .setTitle("Časovnik je potekel!")
                     .setMessage("Časovnik: " + opis)
                     .setPositiveButton("Prekini", (dialog, which) -> {
                         prekiniAlarm();

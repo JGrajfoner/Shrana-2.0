@@ -15,8 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
-import java.util.Locale;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.text.SpannableStringBuilder;
@@ -74,7 +72,7 @@ public class PomocnikActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pomocnik);
 
-        // Funkcionalnost za gumb nazaj: vedno vrni na Recepti (MainActivity)
+        // gumb nazaj, vedno vrni na Recepti (MainActivity)
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {

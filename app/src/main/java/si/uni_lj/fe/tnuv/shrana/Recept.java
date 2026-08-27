@@ -65,8 +65,8 @@ public class Recept implements Serializable {
         return casPriprave + casKuhanja;
     }
 
-    // Kopira vsa polja iz drugega recepta, vendar OHRANI lasten id.
-    // Tako lahko posodobimo obstoječi objekt na mestu, ne da bi ga zamenjali.
+    // kopira vsa polja iz drugega recepta, vendar OHRANI lasten id
+    // s tem posodobimo obstoječi objekt na mestu, ne da bi ga zamenjali
     public void prepisiIz(Recept drugi) {
         this.naslov = drugi.naslov;
         this.casPriprave = drugi.casPriprave;

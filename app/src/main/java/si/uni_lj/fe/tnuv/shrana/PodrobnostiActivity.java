@@ -3,7 +3,6 @@ package si.uni_lj.fe.tnuv.shrana;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -95,7 +94,6 @@ public class PodrobnostiActivity extends AppCompatActivity {
 
         naslov.setText(recept.naslov);
         opis.setText(recept.opis);
-        // Odstranjeni emojiji, saj so zdaj ikonice v XML-ju
         casPriprave.setText("Priprava: " + formatirajCas(recept.casPriprave));
         casKuhanja.setText("Kuhanje: " + formatirajCas(recept.casKuhanja));
         kalorije.setText(recept.kalorije + " kcal");
@@ -112,8 +110,7 @@ public class PodrobnostiActivity extends AppCompatActivity {
         }
     }
 
-    // Poišče obstoječi recept v repozitoriju, ki ustreza temu (po id-ju).
-    // Fallback na naslov omogoča delovanje za stare recepte brez id-ja.
+    // poišče obstoječi recept v repozitoriju, ki ustreza temu (po id-ju).
     private Recept najdiVRepozitoriju(Recept iskani) {
         List<Recept> vsi = RepozitorijReceptov.getRecepti();
         if (iskani.id != null) {
@@ -123,7 +120,7 @@ public class PodrobnostiActivity extends AppCompatActivity {
                 }
             }
         }
-        // Fallback: ujemanje po trenutnem (starem) naslovu, ki ga še drži this.recept
+        // ujemanje po trenutnem (starem) naslovu, ki ga še ima this.recept
         if (recept != null && recept.naslov != null) {
             for (Recept r : vsi) {
                 if (recept.naslov.equals(r.naslov)) {

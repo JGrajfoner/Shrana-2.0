@@ -89,7 +89,6 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <!-- Sem iz kode vstavimo tri vrstice: Zajtrk, Kosilo, Večerja -->
         <LinearLayout
             android:id="@+id/vsebinaObrokov"
             android:layout_width="match_parent"

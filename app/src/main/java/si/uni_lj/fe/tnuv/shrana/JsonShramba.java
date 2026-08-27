@@ -9,7 +9,7 @@ import com.google.gson.JsonSyntaxException;
 
 import java.lang.reflect.Type;
 
-// Skupna pomožni razred za branje/pisanje objektov v SharedPreferences kot JSON.
+//  pomožni razred za branje/pisanje objektov v SharedPreferences kot JSON.
 public class JsonShramba {
 
     private static final Gson GSON = new Gson();

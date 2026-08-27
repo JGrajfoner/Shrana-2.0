@@ -31,7 +31,7 @@ public class SeznamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seznam);
 
-        // Funkcionalnost za gumb nazaj: vedno vrni na Recepti (MainActivity)
+        // gumb nazaj, vedno vrni na Recepti (MainActivity)
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -42,7 +42,7 @@ public class SeznamActivity extends AppCompatActivity {
             }
         });
 
-        // Naložimo seznam z diska
+        // naložiš seznam z diska
         RepozitorijSeznama.nalozi(this);
         postavke = RepozitorijSeznama.getPostavke();
 
@@ -51,7 +51,7 @@ public class SeznamActivity extends AppCompatActivity {
         adapter = new PostavkaAdapter(postavke, this);
         seznam.setAdapter(adapter);
 
-        // Ročno dodajanje
+        // ročno dodajanje
         EditText vnos = findViewById(R.id.vnosPostavka);
         Button gumbDodaj = findViewById(R.id.gumbDodaj);
         gumbDodaj.setOnClickListener(v -> {
@@ -66,7 +66,7 @@ public class SeznamActivity extends AppCompatActivity {
             vnos.setText(""); 
         });
 
-        // Počisti odkljukane
+        // počisti odkljukane
         Button gumbPocisti = findViewById(R.id.gumbPocisti);
         gumbPocisti.setOnClickListener(v -> {
             postavke.removeIf(p -> p.kupljeno);

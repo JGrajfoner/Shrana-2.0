@@ -11,7 +11,6 @@
         style="@style/NaslovZaslona"
         android:text="@string/naslov_casovniki" />
 
-    <!-- FrameLayout: seznam in prazno navodilo se prekrivata -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -26,7 +25,6 @@
             android:paddingEnd="8dp"
             android:paddingBottom="88dp" />
 
-        <!-- Navodilo na sredini, vidno ko ni časovnikov -->
         <TextView
             android:id="@+id/praznoNavodilo"
             android:layout_width="wrap_content"

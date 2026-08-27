@@ -49,7 +49,7 @@ public class KoledarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_koledar);
 
-        // Funkcionalnost za gumb nazaj: vedno vrni na Recepti (MainActivity)
+        // gumb nazaj, vedno vrni na Recepti (MainActivity)
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {

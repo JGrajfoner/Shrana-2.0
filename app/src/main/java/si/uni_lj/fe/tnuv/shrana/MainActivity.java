@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Inicializacija obvestil takoj ob zagonu aplikacije
+        // inicializacija obvestil takoj ob zagonu aplikacije
         RepozitorijCasovnikov.inicializirajObvestila(this);
         preveriDovoljenjaZaObvestila();
 
@@ -208,10 +207,10 @@ public class MainActivity extends AppCompatActivity {
                             adapter.odstrani(pozicija);
                             RepozitorijReceptov.shrani(MainActivity.this);
                         })
-                        // Preklic: vrstico vrnemo na svoje mesto
+                        // prekliči brisanje: vrstico vrnemo na svoje mesto
                         .setNegativeButton("Prekliči", (dialog, kateri) ->
                                 adapter.notifyItemChanged(pozicija))
-                        // Isto velja ob tipki nazaj ali kliku izven pogovornega okna
+                        // isto velja ob tipki nazaj ali kliku izven pogovornega okna
                         .setOnCancelListener(dialog ->
                                 adapter.notifyItemChanged(pozicija))
                         .show();

@@ -11,7 +11,7 @@
         style="@style/NaslovZaslona"
         android:text="@string/naslov_recepti" />
 
-    <!-- Zgornja vrstica: iskanje + filter + priljubljeni -->
+    <!--  iskanje + filter + priljubljeni -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,7 +61,6 @@
             android:contentDescription="@string/opis_priljubljeni" />
     </LinearLayout>
 
-    <!-- FrameLayout dovoli, da gumb "lebdi" nad seznamom (desno spodaj) -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -88,7 +87,7 @@
 
     </FrameLayout>
 
-    <!-- Spodnja navigacija -->
+    <!-- Spodnja navigacijska vrstica -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/spodnjaNavigacija"
         android:layout_width="match_parent"

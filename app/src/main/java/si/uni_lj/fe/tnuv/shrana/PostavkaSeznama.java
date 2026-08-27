@@ -2,7 +2,7 @@ package si.uni_lj.fe.tnuv.shrana;
 
 import java.io.Serializable;
 
-// Ena postavka na nakupovalnem seznamu: besedilo + ali je že kupljena (odkljukana)
+// ena postavka na nakupovalnem seznamu: besedilo + ali je že kupljena (odkljukana)
 public class PostavkaSeznama implements Serializable {
     String besedilo;
     boolean kupljeno;
@@ -12,7 +12,7 @@ public class PostavkaSeznama implements Serializable {
         this.kupljeno = false;
     }
 
-    // Prazen konstruktor za Gson
+    // prazen konstruktor za Gson
     public PostavkaSeznama() {
     }
 }
