@@ -170,7 +170,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/razdelek_sestavine"
+            android:text="@string/razdelek_priprava"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/besedilo_primarno" />
