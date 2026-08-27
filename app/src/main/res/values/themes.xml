@@ -38,4 +38,11 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
     </style>
 
+    <style name="Theme.Shrana.Zagon" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/ozadje</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_logo</item>
+        <item name="android:windowSplashScreenBrandingImage" tools:targetApi="s">@drawable/napis_shrana</item>
+        <item name="postSplashScreenTheme">@style/Theme.Shrana</item>
+    </style>
+
 </resources>
