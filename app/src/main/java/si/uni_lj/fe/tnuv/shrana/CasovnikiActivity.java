@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +35,17 @@ public class CasovnikiActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_casovniki);
 
+        // Funkcionalnost za gumb nazaj: vedno vrni na Recepti (MainActivity)
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent intent = new Intent(CasovnikiActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         // Inicializira obvestila
         RepozitorijCasovnikov.inicializirajObvestila(this);
 
@@ -48,7 +60,7 @@ public class CasovnikiActivity extends AppCompatActivity
 
         nastaviNavigacijo();
         
-        // Preveri ali je treba prikazati popup
+        // Preveri ali je treba prikazati obvestilo iz notifikacije
         handleNotificationIntent(getIntent());
     }
     
@@ -64,7 +76,7 @@ public class CasovnikiActivity extends AppCompatActivity
             if (opisCasovnika != null) {
                 prikaziObvestilo(opisCasovnika);
             }
-            // Prekliči obvestilo
+            // Prekliči obvestilo v vrstici stanja
             if (RepozitorijCasovnikov.notificationManager != null) {
                 RepozitorijCasovnikov.notificationManager.cancel(RepozitorijCasovnikov.NOTIFICATION_ID);
             }

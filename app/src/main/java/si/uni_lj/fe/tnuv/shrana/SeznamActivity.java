@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,6 +30,17 @@ public class SeznamActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seznam);
+
+        // Funkcionalnost za gumb nazaj: vedno vrni na Recepti (MainActivity)
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent intent = new Intent(SeznamActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         // Naložimo seznam z diska
         RepozitorijSeznama.nalozi(this);
@@ -51,13 +63,12 @@ public class SeznamActivity extends AppCompatActivity {
             postavke.add(new PostavkaSeznama(besedilo));
             adapter.notifyItemInserted(postavke.size() - 1);
             RepozitorijSeznama.shrani(this);
-            vnos.setText(""); // počistimo vnosno polje
+            vnos.setText(""); 
         });
 
         // Počisti odkljukane
         Button gumbPocisti = findViewById(R.id.gumbPocisti);
         gumbPocisti.setOnClickListener(v -> {
-            // Odstranimo vse postavke, ki so odkljukane
             postavke.removeIf(p -> p.kupljeno);
             adapter.notifyDataSetChanged();
             RepozitorijSeznama.shrani(this);
@@ -81,30 +92,22 @@ public class SeznamActivity extends AppCompatActivity {
                 startActivity(new Intent(this, KoledarActivity.class));
                 finish();
                 return true;
-            } else if (id == R.id.nav_koledar) {
-                startActivity(new Intent(this, KoledarActivity.class));
-                finish();
-                return true;
             } else if (id == R.id.nav_casovnik) {
                 startActivity(new Intent(this, CasovnikiActivity.class));
                 finish();
                 return true;
-            }
-            else if (id == R.id.nav_pomocnik) {
+            } else if (id == R.id.nav_pomocnik) {
                 startActivity(new Intent(this, PomocnikActivity.class));
                 finish();
                 return true;
             }
-            Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT).show();
             return true;
         });
     }
 
-    // ===== Adapter za postavke =====
     static class PostavkaAdapter extends RecyclerView.Adapter<PostavkaAdapter.PostavkaViewHolder> {
-
         private final List<PostavkaSeznama> postavke;
-        private final AppCompatActivity aktivnost; // za shranjevanje ob spremembi
+        private final AppCompatActivity aktivnost;
 
         PostavkaAdapter(List<PostavkaSeznama> postavke, AppCompatActivity aktivnost) {
             this.postavke = postavke;
@@ -114,8 +117,7 @@ public class SeznamActivity extends AppCompatActivity {
         @NonNull
         @Override
         public PostavkaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View pogled = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_postavka, parent, false);
+            View pogled = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_postavka, parent, false);
             return new PostavkaViewHolder(pogled);
         }
 
@@ -123,8 +125,6 @@ public class SeznamActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull PostavkaViewHolder holder, int position) {
             PostavkaSeznama p = postavke.get(position);
             holder.besedilo.setText(p.besedilo);
-
-            // Pomembno: najprej odstranimo poslušalca, da se ne sproži med nastavljanjem
             holder.kljukica.setOnCheckedChangeListener(null);
             holder.kljukica.setChecked(p.kupljeno);
             prikaziPrecrtano(holder.besedilo, p.kupljeno);
@@ -136,26 +136,20 @@ public class SeznamActivity extends AppCompatActivity {
             });
         }
 
-        // Odkljukano postavko prečrtamo
         private void prikaziPrecrtano(TextView pogled, boolean precrtaj) {
             if (precrtaj) {
-                pogled.setPaintFlags(pogled.getPaintFlags()
-                        | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
+                pogled.setPaintFlags(pogled.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
-                pogled.setPaintFlags(pogled.getPaintFlags()
-                        & ~android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
+                pogled.setPaintFlags(pogled.getPaintFlags() & ~android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
             }
         }
 
         @Override
-        public int getItemCount() {
-            return postavke.size();
-        }
+        public int getItemCount() { return postavke.size(); }
 
         static class PostavkaViewHolder extends RecyclerView.ViewHolder {
             CheckBox kljukica;
             TextView besedilo;
-
             PostavkaViewHolder(@NonNull View itemView) {
                 super(itemView);
                 kljukica = itemView.findViewById(R.id.kljukica);
